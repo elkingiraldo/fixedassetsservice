@@ -11,9 +11,22 @@ import org.springframework.http.HttpStatus;
 public enum FixedAssetsServiceErrorCodes implements IFixedAssetsServiceErrorMsg {
 
 	GENERAL_EXCEPTION("general.exception", HttpStatus.INTERNAL_SERVER_ERROR),
+	CRITERIA_NOT_FOUND("criteria.not.found.exception", HttpStatus.BAD_REQUEST),
 
-	CRITERIA_NOT_FOUND("criteria.not.found.exception", HttpStatus.BAD_REQUEST);
+	FIXED_ASSET_REQUIRED("fixed.asset.required.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_NAME_REQUIRED("fixed.asset.name.required.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_SERIAL_REQUIRED("fixed.asset.serial.required.exception", HttpStatus.BAD_REQUEST),
+	
+	FIXED_ASSET_WEIGHT_REQUIRED("fixed.asset.weight.required.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_HIGH_REQUIRED("fixed.asset.high.required.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_WIDTH_REQUIRED("fixed.asset.width.required.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_LENGTH_REQUIRED("fixed.asset.length.required.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_PURCHASE_VALUE_REQUIRED("fixed.asset.purchase.value.required.exception", HttpStatus.BAD_REQUEST),
+	
+	FIXED_ASSET_PURCHASE_DATE_REQUIRED("fixed.asset.purchase.date.required.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_PURCHASE_DATE_CANT_BE_IN_FUTURE_REQUIRED("fixed.asset.purchase.date.cant.be.in.future.exception", HttpStatus.BAD_REQUEST);
 
+	
 	private String message;
 	private HttpStatus httpStatus;
 	private String errorDetail;
