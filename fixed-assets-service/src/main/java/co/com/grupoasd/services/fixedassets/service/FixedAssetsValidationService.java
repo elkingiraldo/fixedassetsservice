@@ -2,8 +2,11 @@ package co.com.grupoasd.services.fixedassets.service;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.com.grupoasd.services.fixedassets.dao.FixedAsset;
+import co.com.grupoasd.services.fixedassets.dao.FixedAssetsRepository;
 import co.com.grupoasd.services.fixedassets.dtos.FixedAssetDTO;
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceErrorCodes;
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceException;
@@ -17,6 +20,9 @@ import co.com.grupoasd.services.fixedassets.types.AssetType;
  */
 @Service
 public class FixedAssetsValidationService {
+
+	@Autowired
+	private FixedAssetsRepository fixedAssetsRepository;
 
 	/**
 	 * It will validate step by step creation request
@@ -170,6 +176,13 @@ public class FixedAssetsValidationService {
 		if (serial == null || serial.isEmpty() || serial.trim().isEmpty()) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_SERIAL_REQUIRED);
 		}
+
+		FixedAsset entity = fixedAssetsRepository.findBySerial(serial);
+
+		if (entity != null) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_SERIAL_ALREADY_EXISTS);
+		}
+
 	}
 
 	/**

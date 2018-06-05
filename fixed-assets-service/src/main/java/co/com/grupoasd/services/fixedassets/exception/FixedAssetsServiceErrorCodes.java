@@ -16,6 +16,7 @@ public enum FixedAssetsServiceErrorCodes implements IFixedAssetsServiceErrorMsg 
 	FIXED_ASSET_REQUIRED("fixed.asset.required.exception", HttpStatus.BAD_REQUEST),
 	FIXED_ASSET_NAME_REQUIRED("fixed.asset.name.required.exception", HttpStatus.BAD_REQUEST),
 	FIXED_ASSET_SERIAL_REQUIRED("fixed.asset.serial.required.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_SERIAL_ALREADY_EXISTS("fixed.asset.serial.already.exists.exception", HttpStatus.BAD_REQUEST),
 	
 	FIXED_ASSET_WEIGHT_REQUIRED("fixed.asset.weight.required.exception", HttpStatus.BAD_REQUEST),
 	FIXED_ASSET_HIGH_REQUIRED("fixed.asset.high.required.exception", HttpStatus.BAD_REQUEST),

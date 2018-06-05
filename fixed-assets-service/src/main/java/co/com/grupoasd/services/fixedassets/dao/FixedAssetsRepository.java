@@ -10,4 +10,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface FixedAssetsRepository extends MongoRepository<FixedAsset, String>, FixedAssetsCustomRepository {
 
+	public FixedAsset findBySerial(String serial);
+
 }
