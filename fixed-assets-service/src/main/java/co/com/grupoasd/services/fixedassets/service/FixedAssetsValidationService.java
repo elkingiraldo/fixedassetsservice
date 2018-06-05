@@ -42,7 +42,7 @@ public class FixedAssetsValidationService {
 		validateWidth(dto.getWidth());
 		validateLength(dto.getLength());
 		validatePurchaseValue(dto.getPurchaseValue());
-		validatePurchaseDate(dto.getPurchaseDate());
+		validateDates(dto);
 
 		dto = validateAndAutocompleteAssetType(dto);
 
@@ -94,19 +94,61 @@ public class FixedAssetsValidationService {
 	}
 
 	/**
-	 * Validate if the purchase date is null or it is an invalid date
+	 * Validate requirements for dates
 	 * 
-	 * @param purchaseDate
+	 * @param dto
 	 * @throws FixedAssetsServiceException
 	 */
-	private void validatePurchaseDate(Date purchaseDate) throws FixedAssetsServiceException {
+	private void validateDates(FixedAssetDTO dto) throws FixedAssetsServiceException {
+
+		Date purchaseDate = validatePurchaseDate(dto.getPurchaseDate());
+		Date leavingDate = validateLeavingDate(dto.getLeavingDate());
+
+		if (purchaseDate.after(leavingDate)) {
+			throw new FixedAssetsServiceException(
+					FixedAssetsServiceErrorCodes.FIXED_ASSET_PURCHASE_DATE_NOT_LATER_LEAVING_DATE_REQUIRED);
+		}
+
+	}
+
+	/**
+	 * Validate leaving date requirements and return it
+	 * 
+	 * @param leavingDate
+	 * @return
+	 * @throws FixedAssetsServiceException
+	 */
+	private Date validateLeavingDate(Date leavingDate) throws FixedAssetsServiceException {
+		if (leavingDate == null) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_LEAVING_DATE_REQUIRED);
+		}
+
+		if (leavingDate.before(new Date())) {
+			throw new FixedAssetsServiceException(
+					FixedAssetsServiceErrorCodes.FIXED_ASSET_LEAVING_DATE_CANT_BE_IN_PAST_REQUIRED);
+		}
+
+		return leavingDate;
+	}
+
+	/**
+	 * Validate purchase date requirements and return it
+	 * 
+	 * @param purchaseDate
+	 * @return
+	 * @throws FixedAssetsServiceException
+	 */
+	private Date validatePurchaseDate(Date purchaseDate) throws FixedAssetsServiceException {
 		if (purchaseDate == null) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_PURCHASE_DATE_REQUIRED);
 		}
+
 		if (purchaseDate.after(new Date())) {
 			throw new FixedAssetsServiceException(
 					FixedAssetsServiceErrorCodes.FIXED_ASSET_PURCHASE_DATE_CANT_BE_IN_FUTURE_REQUIRED);
 		}
+
+		return purchaseDate;
 	}
 
 	/**
@@ -173,16 +215,29 @@ public class FixedAssetsValidationService {
 	 * @throws FixedAssetsServiceException
 	 */
 	private void validateSerial(String serial) throws FixedAssetsServiceException {
-		if (serial == null || serial.isEmpty() || serial.trim().isEmpty()) {
-			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_SERIAL_REQUIRED);
-		}
 
-		FixedAsset entity = fixedAssetsRepository.findBySerial(serial);
+		FixedAsset entity = retrieveBySerial(serial);
 
 		if (entity != null) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_SERIAL_ALREADY_EXISTS);
 		}
 
+	}
+
+	/**
+	 * This method will retrieve fixed asset by serial
+	 * 
+	 * @param serial
+	 * @return
+	 * @throws FixedAssetsServiceException
+	 */
+	private FixedAsset retrieveBySerial(String serial) throws FixedAssetsServiceException {
+
+		if (serial == null || serial.isEmpty() || serial.trim().isEmpty()) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_SERIAL_REQUIRED);
+		}
+
+		return fixedAssetsRepository.findBySerial(serial);
 	}
 
 	/**
@@ -207,6 +262,88 @@ public class FixedAssetsValidationService {
 		if (dto == null) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_REQUIRED);
 		}
+	}
+
+	/**
+	 * This method will validate the request to update it
+	 * 
+	 * @param fixedAsset
+	 * @return
+	 * @throws FixedAssetsServiceException
+	 */
+	public FixedAsset validateUpdate(FixedAssetDTO dto) throws FixedAssetsServiceException {
+
+		validateDto(dto);
+		FixedAsset oldFixedAsset = validateSerialForUpdating(dto.getSerial());
+
+		Date leavingDate = validateLeavingDateForUpdating(oldFixedAsset, dto.getLeavingDate());
+		String stockNumber = validateStockNumberForUpdating(dto.getStockNumber());
+
+		if (leavingDate == null && stockNumber == null) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.NOT_INFORMATION_FOR_UPDATING);
+		}
+		if (leavingDate != null) {
+			oldFixedAsset.setLeavingDate(leavingDate);
+		}
+		if (stockNumber != null) {
+			oldFixedAsset.setStockNumber(stockNumber);
+		}
+
+		return oldFixedAsset;
+	}
+
+	/**
+	 * 
+	 * @param oldFixedAsset
+	 * @param leavingDate
+	 * @return
+	 */
+	private Date validateLeavingDateForUpdating(FixedAsset oldFixedAsset, Date leavingDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * This method will validate that the fixed asset the user wants to update
+	 * exists in DB
+	 * 
+	 * @param serial
+	 * @return
+	 * @throws FixedAssetsServiceException
+	 */
+	private FixedAsset validateSerialForUpdating(String serial) throws FixedAssetsServiceException {
+
+		FixedAsset entity = retrieveBySerial(serial);
+
+		if (entity == null) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_SERIAL_NOT_EXISTS);
+		} else {
+			return entity;
+		}
+	}
+
+	/**
+	 * Validate the stock number request and the stock number in DB, and depending
+	 * on values it will return a value, or null, or an exception
+	 * 
+	 * @param stockNumber
+	 * @return
+	 * @throws FixedAssetsServiceException
+	 */
+	private String validateStockNumberForUpdating(String stockNumber) throws FixedAssetsServiceException {
+
+		if (stockNumber == null) {
+			return null;
+		}
+
+		FixedAsset entity = fixedAssetsRepository.findByStockNumber(stockNumber);
+		if (entity != null) {
+			throw new FixedAssetsServiceException(
+					FixedAssetsServiceErrorCodes.STOCK_NUMBER_ALREADY_EXISTS_FOR_UPDATING);
+		} else {
+			return stockNumber;
+		}
+
 	}
 
 }

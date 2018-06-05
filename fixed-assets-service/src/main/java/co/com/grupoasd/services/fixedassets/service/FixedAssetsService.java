@@ -67,4 +67,20 @@ public class FixedAssetsService {
 		return fixedAssetsConverterService.toDtos(entities);
 	}
 
+	/**
+	 * This method will update fixed asset and save it in DB
+	 * 
+	 * @param fixedAsset
+	 * @return
+	 * @throws FixedAssetsServiceException
+	 */
+	public FixedAssetDTO update(FixedAssetDTO dto) throws FixedAssetsServiceException {
+
+		FixedAsset newEntity = fixedAssetsValidationService.validateUpdate(dto);
+
+		fixedAssetsRepository.save(newEntity);
+
+		return fixedAssetsConverterService.toDTO(newEntity);
+	}
+
 }

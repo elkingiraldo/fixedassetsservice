@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,6 +56,14 @@ public class FixedAssetsController {
 
 		return new ResponseEntity<PageResponseDTO<FixedAssetDTO>>(fixedAssetsFound, HttpStatus.OK);
 
+	}
+
+	@PutMapping
+	public ResponseEntity<FixedAssetDTO> put(@RequestBody FixedAssetDTO fixedAsset,
+			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
+
+		FixedAssetDTO newFixedAsset = fixedAssetsService.update(fixedAsset);
+		return new ResponseEntity<FixedAssetDTO>(newFixedAsset, HttpStatus.OK);
 	}
 
 }
