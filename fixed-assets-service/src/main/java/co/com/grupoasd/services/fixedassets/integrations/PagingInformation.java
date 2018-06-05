@@ -1,4 +1,4 @@
-package co.com.grupoasd.services.fixedassets.paging;
+package co.com.grupoasd.services.fixedassets.integrations;
 
 public class PagingInformation {
 

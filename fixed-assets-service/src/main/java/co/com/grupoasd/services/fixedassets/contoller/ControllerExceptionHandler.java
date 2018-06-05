@@ -19,6 +19,7 @@ import co.com.grupoasd.services.fixedassets.constants.FixedAssetsServiceConstant
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceErrorCodes;
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceException;
 import co.com.grupoasd.services.fixedassets.exception.ServiceExceptionWrapper;
+import co.com.grupoasd.services.fixedassets.integrations.InvalidHeaderParameterException;
 
 /**
  * Exception management controller
@@ -79,6 +80,18 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 		exception.setErrorOrigin(applicationName);
 
 		return new ResponseEntity<ServiceExceptionWrapper>(exception, ex.getCode().getHttpStatus());
+	}
+
+	@ExceptionHandler(value = { InvalidHeaderParameterException.class })
+	protected ResponseEntity<ServiceExceptionWrapper> handleReportServiceException(InvalidHeaderParameterException ex,
+			WebRequest request) {
+		logger.error("Fixed Assets service -> managed exception occurred " + ex.getMessage(), ex);
+		ex.printStackTrace();
+
+		ServiceExceptionWrapper exception = new ServiceExceptionWrapper(ex.getInvalidHeaderCode(), ex.getMessage(),
+				null);
+
+		return new ResponseEntity<ServiceExceptionWrapper>(exception, HttpStatus.BAD_REQUEST);
 	}
 
 	private Locale getLocale(WebRequest request) {

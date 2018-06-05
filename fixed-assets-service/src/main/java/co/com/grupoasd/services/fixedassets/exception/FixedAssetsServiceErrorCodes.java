@@ -25,7 +25,10 @@ public enum FixedAssetsServiceErrorCodes implements IFixedAssetsServiceErrorMsg 
 	FIXED_ASSET_PURCHASE_VALUE_REQUIRED("fixed.asset.purchase.value.required.exception", HttpStatus.BAD_REQUEST),
 	
 	FIXED_ASSET_PURCHASE_DATE_REQUIRED("fixed.asset.purchase.date.required.exception", HttpStatus.BAD_REQUEST),
-	FIXED_ASSET_PURCHASE_DATE_CANT_BE_IN_FUTURE_REQUIRED("fixed.asset.purchase.date.cant.be.in.future.exception", HttpStatus.BAD_REQUEST);
+	FIXED_ASSET_PURCHASE_DATE_CANT_BE_IN_FUTURE_REQUIRED("fixed.asset.purchase.date.cant.be.in.future.exception", HttpStatus.BAD_REQUEST),
+	
+	PARSE_EXCEPTION_PURCHASE_DATE_FROM("fixed.asset.purchase.date.from.parse.exception", HttpStatus.BAD_REQUEST),
+	PARSE_EXCEPTION_PURCHASE_DATE_TO("fixed.asset.purchase.date.to.parse.exception", HttpStatus.BAD_REQUEST);
 
 	
 	private String message;
