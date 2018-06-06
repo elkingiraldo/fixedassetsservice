@@ -18,6 +18,8 @@ public enum FixedAssetsServiceErrorCodes implements IFixedAssetsServiceErrorMsg 
 	FIXED_ASSET_SERIAL_REQUIRED("fixed.asset.serial.required.exception", HttpStatus.BAD_REQUEST),
 	FIXED_ASSET_SERIAL_NOT_EXISTS("fixed.asset.serial.not.exists.exception", HttpStatus.BAD_REQUEST),
 	FIXED_ASSET_SERIAL_ALREADY_EXISTS("fixed.asset.serial.already.exists.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_STOCK_NUMBER_REQUIRED("fixed.asset.stock.number.required.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_STOCK_NUMBER_ALREADY_EXISTS("fixed.asset.stock.number.already.exists.for.updating.exception", HttpStatus.BAD_REQUEST),
 	
 	FIXED_ASSET_WEIGHT_REQUIRED("fixed.asset.weight.required.exception", HttpStatus.BAD_REQUEST),
 	FIXED_ASSET_HIGH_REQUIRED("fixed.asset.high.required.exception", HttpStatus.BAD_REQUEST),
@@ -29,13 +31,13 @@ public enum FixedAssetsServiceErrorCodes implements IFixedAssetsServiceErrorMsg 
 	FIXED_ASSET_PURCHASE_DATE_CANT_BE_IN_FUTURE_REQUIRED("fixed.asset.purchase.date.cant.be.in.future.exception", HttpStatus.BAD_REQUEST),
 	FIXED_ASSET_LEAVING_DATE_REQUIRED("fixed.asset.leaving.date.required.exception", HttpStatus.BAD_REQUEST),
 	FIXED_ASSET_LEAVING_DATE_CANT_BE_IN_PAST_REQUIRED("fixed.asset.leaving.date.cant.be.in.past.exception", HttpStatus.BAD_REQUEST),
-	FIXED_ASSET_PURCHASE_DATE_NOT_LATER_LEAVING_DATE_REQUIRED("fixed.asset.purchase.date.not.later.leaving.date.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_PURCHASE_DATE_NOT_LATER_LEAVING_DATE("fixed.asset.purchase.date.not.later.leaving.date.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_LEAVING_DATE_NOT_BEFORE_PURCHASE_DATE("fixed.asset.leaving.date.not.before.purchase.date.exception", HttpStatus.BAD_REQUEST),
 	
 	PARSE_EXCEPTION_PURCHASE_DATE_FROM("fixed.asset.purchase.date.from.parse.exception", HttpStatus.BAD_REQUEST),
 	PARSE_EXCEPTION_PURCHASE_DATE_TO("fixed.asset.purchase.date.to.parse.exception", HttpStatus.BAD_REQUEST),
 	
-	NOT_INFORMATION_FOR_UPDATING("fixed.asset.not.information.for.updating.exception", HttpStatus.BAD_REQUEST),
-	STOCK_NUMBER_ALREADY_EXISTS_FOR_UPDATING("fixed.asset.stock.number.already.exists.for.updating.exception", HttpStatus.BAD_REQUEST);
+	NOT_INFORMATION_FOR_UPDATING("fixed.asset.not.information.for.updating.exception", HttpStatus.BAD_REQUEST);
 
 	
 	private String message;

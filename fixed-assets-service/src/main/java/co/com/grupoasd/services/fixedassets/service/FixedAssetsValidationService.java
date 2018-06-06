@@ -1,6 +1,7 @@
 package co.com.grupoasd.services.fixedassets.service;
 
 import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,13 +46,47 @@ public class FixedAssetsValidationService {
 		validateDates(dto);
 
 		dto = validateAndAutocompleteAssetType(dto);
+		dto = validateAndAutocompleteStockNumber(dto);
 
 		// TODO
-		// dto = validateAndAutocompleteStockNumber(dto);
 		// dto = autocompleteStatus(dto);
 		// persona o area y ciudad
 
 		return dto;
+	}
+
+	private FixedAssetDTO validateAndAutocompleteStockNumber(FixedAssetDTO dto) throws FixedAssetsServiceException {
+
+		String stockNumber = dto.getStockNumber();
+
+		if (stockNumber == null || stockNumber.isEmpty() || stockNumber.trim().isEmpty()) {
+			dto.setStockNumber(UUID.randomUUID().toString());
+			return dto;
+		}
+
+		FixedAsset oldFixedAsset = retrieveByStockNumber(stockNumber);
+
+		if (oldFixedAsset != null) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_STOCK_NUMBER_ALREADY_EXISTS);
+		}
+
+		return dto;
+	}
+
+	/**
+	 * This method will retrieve fixed asset by stockNumber
+	 * 
+	 * @param stockNumber
+	 * @return
+	 * @throws FixedAssetsServiceException
+	 */
+	private FixedAsset retrieveByStockNumber(String stockNumber) throws FixedAssetsServiceException {
+
+		if (stockNumber == null || stockNumber.isEmpty() || stockNumber.trim().isEmpty()) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_STOCK_NUMBER_REQUIRED);
+		}
+
+		return fixedAssetsRepository.findByStockNumber(stockNumber);
 	}
 
 	/**
@@ -106,7 +141,7 @@ public class FixedAssetsValidationService {
 
 		if (purchaseDate.after(leavingDate)) {
 			throw new FixedAssetsServiceException(
-					FixedAssetsServiceErrorCodes.FIXED_ASSET_PURCHASE_DATE_NOT_LATER_LEAVING_DATE_REQUIRED);
+					FixedAssetsServiceErrorCodes.FIXED_ASSET_PURCHASE_DATE_NOT_LATER_LEAVING_DATE);
 		}
 
 	}
@@ -297,10 +332,21 @@ public class FixedAssetsValidationService {
 	 * @param oldFixedAsset
 	 * @param leavingDate
 	 * @return
+	 * @throws FixedAssetsServiceException
 	 */
-	private Date validateLeavingDateForUpdating(FixedAsset oldFixedAsset, Date leavingDate) {
-		// TODO Auto-generated method stub
-		return null;
+	private Date validateLeavingDateForUpdating(FixedAsset oldFixedAsset, Date leavingDate)
+			throws FixedAssetsServiceException {
+
+		if (leavingDate == null) {
+			return null;
+		}
+
+		if (leavingDate.before(oldFixedAsset.getPurchaseDate())) {
+			throw new FixedAssetsServiceException(
+					FixedAssetsServiceErrorCodes.FIXED_ASSET_LEAVING_DATE_NOT_BEFORE_PURCHASE_DATE);
+		}
+
+		return leavingDate;
 	}
 
 	/**
@@ -336,10 +382,10 @@ public class FixedAssetsValidationService {
 			return null;
 		}
 
-		FixedAsset entity = fixedAssetsRepository.findByStockNumber(stockNumber);
+		FixedAsset entity = retrieveByStockNumber(stockNumber);
+
 		if (entity != null) {
-			throw new FixedAssetsServiceException(
-					FixedAssetsServiceErrorCodes.STOCK_NUMBER_ALREADY_EXISTS_FOR_UPDATING);
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_STOCK_NUMBER_ALREADY_EXISTS);
 		} else {
 			return stockNumber;
 		}
