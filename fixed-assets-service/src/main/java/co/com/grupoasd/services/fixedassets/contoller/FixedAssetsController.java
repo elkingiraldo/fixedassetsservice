@@ -1,5 +1,7 @@
 package co.com.grupoasd.services.fixedassets.contoller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,8 @@ import co.com.grupoasd.services.fixedassets.service.FixedAssetsService;
 @RequestMapping("/fixedassets/v1.0")
 public class FixedAssetsController {
 
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+
 	@Autowired
 	private FixedAssetsService fixedAssetsService;
 
@@ -36,7 +40,11 @@ public class FixedAssetsController {
 	public ResponseEntity<FixedAssetDTO> post(@RequestBody FixedAssetDTO fixedAsset,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
 
+		logger.debug("FixedAssetDTO request:" + fixedAsset.toString());
+
 		FixedAssetDTO newFixedAsset = fixedAssetsService.create(fixedAsset);
+
+		logger.debug("FixedAssetDTO saved response:" + newFixedAsset.toString());
 
 		return new ResponseEntity<FixedAssetDTO>(newFixedAsset, HttpStatus.CREATED);
 	}
@@ -49,10 +57,18 @@ public class FixedAssetsController {
 			@RequestHeader(value = "locale", required = false) String locale)
 			throws FixedAssetsServiceException, InvalidHeaderParameterException {
 
+		logger.debug("Search Filters: " + searchFilters + ", Order Fields: " + orderFields + "Paging Information: "
+				+ pagingInformation);
+		
+		logger.info("Search Filters: " + searchFilters + ", Order Fields: " + orderFields + "Paging Information: "
+				+ pagingInformation);
+
 		PageResponseDTO<FixedAssetDTO> fixedAssetsFound = fixedAssetsService.get(
 				GetRequestSerializer.extractFilters(searchFilters),
 				GetRequestSerializer.extractOrderFields(orderFields),
 				GetRequestSerializer.extractPagingInformation(pagingInformation));
+
+		logger.debug("Search Response: " + fixedAssetsFound.toString());
 
 		return new ResponseEntity<PageResponseDTO<FixedAssetDTO>>(fixedAssetsFound, HttpStatus.OK);
 
