@@ -8,6 +8,6 @@ package co.com.grupoasd.services.fixedassets.types;
  */
 public enum AssetAssignmentType {
 
-	USER, AREA;
+	USER, AREA, STOCK;
 	
 }

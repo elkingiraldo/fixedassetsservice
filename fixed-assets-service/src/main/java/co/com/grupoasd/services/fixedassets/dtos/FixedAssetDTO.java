@@ -5,7 +5,6 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import co.com.grupoasd.services.fixedassets.types.AssetStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -61,7 +60,7 @@ public class FixedAssetDTO implements Serializable {
 	private Date leavingDate;
 
 	@ApiModelProperty(notes = "The fixed asset status", required = false)
-	private AssetStatus status;
+	private String status;
 
 	@ApiModelProperty(notes = "The fixed asset status", required = true)
 	private String type;
@@ -176,11 +175,11 @@ public class FixedAssetDTO implements Serializable {
 		this.leavingDate = leavingDate;
 	}
 
-	public AssetStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(AssetStatus status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

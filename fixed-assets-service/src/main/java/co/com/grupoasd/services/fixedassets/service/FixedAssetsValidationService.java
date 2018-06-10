@@ -12,6 +12,7 @@ import co.com.grupoasd.services.fixedassets.dtos.FixedAssetDTO;
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceErrorCodes;
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceException;
 import co.com.grupoasd.services.fixedassets.types.AssetAssignmentType;
+import co.com.grupoasd.services.fixedassets.types.AssetStatus;
 import co.com.grupoasd.services.fixedassets.types.AssetType;
 
 /**
@@ -55,9 +56,6 @@ public class FixedAssetsValidationService {
 		validateAssetType(dto);
 		validateStockNumber(dto);
 
-		// TODO
-		// dto = autocompleteStatus(dto);
-
 	}
 
 	/**
@@ -67,11 +65,6 @@ public class FixedAssetsValidationService {
 	 * @throws FixedAssetsServiceException
 	 */
 	private void validateAssignment(FixedAssetDTO dto) throws FixedAssetsServiceException {
-
-		if (dto.getAssignmentId() == null || dto.getAssignmentId().isEmpty()
-				|| dto.getAssignmentId().trim().isEmpty()) {
-			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_ID_REQUIRED);
-		}
 
 		if (dto.getAssignmentType() == null || dto.getAssignmentType().isEmpty()
 				|| dto.getAssignmentType().trim().isEmpty()) {
@@ -90,11 +83,25 @@ public class FixedAssetsValidationService {
 
 			switch (assignmentType) {
 			case USER:
+				if (dto.getAssignmentId() == null || dto.getAssignmentId().isEmpty()
+						|| dto.getAssignmentId().trim().isEmpty()) {
+					throw new FixedAssetsServiceException(
+							FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_ID_REQUIRED);
+				}
 				userService.retrieveByPersonalId(dto.getAssignmentId());
+				dto.setStatus(AssetStatus.ASSINGNED.name());
 				break;
 			case AREA:
+				if (dto.getAssignmentId() == null || dto.getAssignmentId().isEmpty()
+						|| dto.getAssignmentId().trim().isEmpty()) {
+					throw new FixedAssetsServiceException(
+							FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_ID_REQUIRED);
+				}
 				areaService.retrieveByName(dto.getAssignmentId());
+				dto.setStatus(AssetStatus.ASSINGNED.name());
 				break;
+			case STOCK:
+				dto.setStatus(AssetStatus.ACTIVE.name());
 			default:
 				break;
 			}
@@ -362,18 +369,16 @@ public class FixedAssetsValidationService {
 		validateDto(dto);
 		FixedAsset oldFixedAsset = validateSerialForUpdating(dto.getSerial());
 
-		Date leavingDate = validateLeavingDateForUpdating(oldFixedAsset, dto.getLeavingDate());
-		String stockNumber = validateStockNumberForUpdating(dto.getStockNumber());
+		validateLeavingDateForUpdating(oldFixedAsset, dto.getLeavingDate());
+		validateStockNumberForUpdating(oldFixedAsset, dto.getStockNumber());
 
-		if (leavingDate == null && stockNumber == null) {
+		if (oldFixedAsset.getLeavingDate().equals(dto.getLeavingDate())
+				&& oldFixedAsset.getStockNumber().equals(dto.getStockNumber())) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.NOT_INFORMATION_FOR_UPDATING);
 		}
-		if (leavingDate != null) {
-			oldFixedAsset.setLeavingDate(leavingDate);
-		}
-		if (stockNumber != null) {
-			oldFixedAsset.setStockNumber(stockNumber);
-		}
+
+		oldFixedAsset.setLeavingDate(dto.getLeavingDate());
+		oldFixedAsset.setStockNumber(dto.getStockNumber());
 
 		return oldFixedAsset;
 	}
@@ -382,14 +387,13 @@ public class FixedAssetsValidationService {
 	 * 
 	 * @param oldFixedAsset
 	 * @param leavingDate
-	 * @return
 	 * @throws FixedAssetsServiceException
 	 */
-	private Date validateLeavingDateForUpdating(FixedAsset oldFixedAsset, Date leavingDate)
+	private void validateLeavingDateForUpdating(FixedAsset oldFixedAsset, Date leavingDate)
 			throws FixedAssetsServiceException {
 
 		if (leavingDate == null) {
-			return null;
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_LEAVING_DATE_REQUIRED);
 		}
 
 		if (leavingDate.before(oldFixedAsset.getPurchaseDate())) {
@@ -397,7 +401,6 @@ public class FixedAssetsValidationService {
 					FixedAssetsServiceErrorCodes.FIXED_ASSET_LEAVING_DATE_NOT_BEFORE_PURCHASE_DATE);
 		}
 
-		return leavingDate;
 	}
 
 	/**
@@ -423,22 +426,18 @@ public class FixedAssetsValidationService {
 	 * Validate the stock number request and the stock number in DB, and depending
 	 * on values it will return a value, or null, or an exception
 	 * 
+	 * @param oldFixedAsset
+	 * 
 	 * @param stockNumber
-	 * @return
 	 * @throws FixedAssetsServiceException
 	 */
-	private String validateStockNumberForUpdating(String stockNumber) throws FixedAssetsServiceException {
-
-		if (stockNumber == null) {
-			return null;
-		}
+	private void validateStockNumberForUpdating(FixedAsset oldFixedAsset, String stockNumber)
+			throws FixedAssetsServiceException {
 
 		FixedAsset entity = retrieveByStockNumber(stockNumber);
 
-		if (entity != null) {
+		if (entity != null && !oldFixedAsset.getStockNumber().equals(stockNumber)) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_STOCK_NUMBER_ALREADY_EXISTS);
-		} else {
-			return stockNumber;
 		}
 
 	}

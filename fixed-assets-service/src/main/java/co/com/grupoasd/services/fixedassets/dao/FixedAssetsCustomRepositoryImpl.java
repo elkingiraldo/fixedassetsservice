@@ -77,34 +77,42 @@ public class FixedAssetsCustomRepositoryImpl implements FixedAssetsCustomReposit
 				case COLOR:
 					query.addCriteria(Criteria.where("color").regex(filterValue, "i"));
 					break;
+				case LEAVING_DATE:
+					try {
+						query.addCriteria(Criteria.where("leavingDate")
+								.lt(format.parse(searchFilters.get(FixedAssetCriteria.LEAVING_DATE.name()))));
+					} catch (ParseException e) {
+						throw new FixedAssetsServiceException(
+								FixedAssetsServiceErrorCodes.PARSE_EXCEPTION_LEAVING_DATE);
+					}
+					break;
 				default:
 					break;
 				}
+			}
 
-				if (searchFilters.get(FixedAssetCriteria.PURCHASE_DATE_FROM.name()) != null
-						&& searchFilters.get(FixedAssetCriteria.PURCHASE_DATE_TO.name()) != null) {
+			if (searchFilters.get(FixedAssetCriteria.PURCHASE_DATE_FROM.name()) != null
+					&& searchFilters.get(FixedAssetCriteria.PURCHASE_DATE_TO.name()) != null) {
 
-					Criteria startDate = null;
-					try {
-						startDate = Criteria.where("purchaseDate")
-								.gte(format.parse(searchFilters.get(FixedAssetCriteria.PURCHASE_DATE_FROM.name())));
-					} catch (ParseException e) {
-						throw new FixedAssetsServiceException(
-								FixedAssetsServiceErrorCodes.PARSE_EXCEPTION_PURCHASE_DATE_FROM);
-					}
-
-					Criteria endDate = null;
-					try {
-						endDate = Criteria.where("purchaseDate")
-								.lte(format.parse(searchFilters.get(FixedAssetCriteria.PURCHASE_DATE_TO.name())));
-					} catch (ParseException e) {
-						throw new FixedAssetsServiceException(
-								FixedAssetsServiceErrorCodes.PARSE_EXCEPTION_PURCHASE_DATE_TO);
-					}
-
-					query.addCriteria(new Criteria().andOperator(startDate, endDate));
+				Criteria startDate = null;
+				try {
+					startDate = Criteria.where("purchaseDate")
+							.gte(format.parse(searchFilters.get(FixedAssetCriteria.PURCHASE_DATE_FROM.name())));
+				} catch (ParseException e) {
+					throw new FixedAssetsServiceException(
+							FixedAssetsServiceErrorCodes.PARSE_EXCEPTION_PURCHASE_DATE_FROM);
 				}
 
+				Criteria endDate = null;
+				try {
+					endDate = Criteria.where("purchaseDate")
+							.lte(format.parse(searchFilters.get(FixedAssetCriteria.PURCHASE_DATE_TO.name())));
+				} catch (ParseException e) {
+					throw new FixedAssetsServiceException(
+							FixedAssetsServiceErrorCodes.PARSE_EXCEPTION_PURCHASE_DATE_TO);
+				}
+
+				query.addCriteria(new Criteria().andOperator(startDate, endDate));
 			}
 
 		}

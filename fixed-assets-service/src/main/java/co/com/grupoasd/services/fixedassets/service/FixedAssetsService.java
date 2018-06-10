@@ -83,4 +83,15 @@ public class FixedAssetsService {
 		return fixedAssetsConverterService.toDTO(newEntity);
 	}
 
+	/**
+	 * Update fixed asset automatically when leaving date is in the past
+	 * 
+	 * @param dto
+	 */
+	public void updateExpirateLeavingDate(FixedAssetDTO dto) {
+
+		fixedAssetsRepository.save(fixedAssetsConverterService.toEntity(dto));
+
+	}
+
 }
