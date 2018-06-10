@@ -2,6 +2,8 @@ package co.com.grupoasd.services.fixedassets.dao;
 
 import java.util.Date;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import co.com.grupoasd.services.fixedassets.types.AssetStatus;
 import co.com.grupoasd.services.fixedassets.types.AssetType;
 
@@ -11,6 +13,7 @@ import co.com.grupoasd.services.fixedassets.types.AssetType;
  * @author egiraldo
  *
  */
+@Document(collection = "fixed_assets")
 public class FixedAsset {
 
 	private String id;

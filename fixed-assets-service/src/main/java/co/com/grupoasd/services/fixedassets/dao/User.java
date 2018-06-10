@@ -1,11 +1,14 @@
 package co.com.grupoasd.services.fixedassets.dao;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * Entity for people
  * 
  * @author egiraldo
  *
  */
+@Document(collection = "users")
 public class User {
 
 	private String id;

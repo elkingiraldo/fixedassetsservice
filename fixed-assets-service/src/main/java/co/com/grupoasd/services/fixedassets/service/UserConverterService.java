@@ -16,7 +16,7 @@ import co.com.grupoasd.services.fixedassets.dtos.UserDTO;
  *
  */
 @Service
-public class UserConverterSerice {
+public class UserConverterService {
 
 	/**
 	 * Convert entity to DTO

@@ -29,7 +29,7 @@ public class CityDTO implements Serializable {
 	private String cityCode;
 
 	@ApiModelProperty(notes = "Flag for knowing when city is available to assign an area", required = true)
-	private boolean availableToAssign;
+	private boolean availableToAssignArea;
 
 	public String getId() {
 		return id;
@@ -55,18 +55,18 @@ public class CityDTO implements Serializable {
 		this.cityCode = cityCode;
 	}
 
-	public boolean isAvailableToAssign() {
-		return availableToAssign;
+	public boolean isAvailableToAssignArea() {
+		return availableToAssignArea;
 	}
 
-	public void setAvailableToAssign(boolean availableToAssign) {
-		this.availableToAssign = availableToAssign;
+	public void setAvailableToAssignArea(boolean availableToAssignArea) {
+		this.availableToAssignArea = availableToAssignArea;
 	}
 
 	@Override
 	public String toString() {
-		return "CityDTO [id=" + id + ", name=" + name + ", cityCode=" + cityCode + ", availableToAssign="
-				+ availableToAssign + "]";
+		return "CityDTO [id=" + id + ", name=" + name + ", cityCode=" + cityCode + ", availableToAssignArea="
+				+ availableToAssignArea + "]";
 	}
 
 }

@@ -1,17 +1,20 @@
 package co.com.grupoasd.services.fixedassets.dao;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * Entity for cities
  * 
  * @author egiraldo
  *
  */
+@Document(collection = "cities")
 public class City {
 
 	private String id;
 	private String name;
 	private String cityCode;
-	private boolean availableToAssign;
+	private boolean availableToAssignArea;
 
 	public String getId() {
 		return id;
@@ -37,18 +40,18 @@ public class City {
 		this.cityCode = cityCode;
 	}
 
-	public boolean isAvailableToAssign() {
-		return availableToAssign;
+	public boolean isAvailableToAssignArea() {
+		return availableToAssignArea;
 	}
 
-	public void setAvailableToAssign(boolean availableToAssign) {
-		this.availableToAssign = availableToAssign;
+	public void setAvailableToAssignArea(boolean availableToAssignArea) {
+		this.availableToAssignArea = availableToAssignArea;
 	}
 
 	@Override
 	public String toString() {
-		return "City [id=" + id + ", name=" + name + ", cityCode=" + cityCode + ", availableToAssign="
-				+ availableToAssign + "]";
+		return "City [id=" + id + ", name=" + name + ", cityCode=" + cityCode + ", availableToAssignArea="
+				+ availableToAssignArea + "]";
 	}
 
 }

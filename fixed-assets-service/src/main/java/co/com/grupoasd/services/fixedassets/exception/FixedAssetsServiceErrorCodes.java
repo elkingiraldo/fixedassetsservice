@@ -47,6 +47,7 @@ public enum FixedAssetsServiceErrorCodes implements IFixedAssetsServiceErrorMsg 
 	CITY_NAME_ALREADY_EXISTS("city.name.already.exists.exception", HttpStatus.BAD_REQUEST),
 	CITY_CODE_ALREADY_EXISTS("city.code.already.exists.exception", HttpStatus.BAD_REQUEST),
 	CITY_AVAILABILITY_CANNOT_BE_UPDATED("city.availability.cannot.be.updated.exception", HttpStatus.BAD_REQUEST),
+	CITY_ALREADY_HAS_ASSIGNMENT_AREA("city.already.has.assigned.area.exception", HttpStatus.BAD_REQUEST),
 
 	USER_NOT_FOUND("user.not.found.exception", HttpStatus.NOT_FOUND),
 	USER_REQUIRED("user.required.exception", HttpStatus.BAD_REQUEST),
@@ -54,7 +55,14 @@ public enum FixedAssetsServiceErrorCodes implements IFixedAssetsServiceErrorMsg 
 	USER_FIRST_NAME_REQUIRED("user.first.name.required.exception", HttpStatus.BAD_REQUEST),
 	USER_LAST_NAME_REQUIRED("user.last.name.required.exception", HttpStatus.BAD_REQUEST),
 	USER_PERSONAL_ID_REQUIRED("user.personal.id.required.exception", HttpStatus.BAD_REQUEST),
-	USER_PERSONAL_ID_ALREADY_EXISTS("user.personal.id.already.exists.exception", HttpStatus.BAD_REQUEST)
+	USER_PERSONAL_ID_ALREADY_EXISTS("user.personal.id.already.exists.exception", HttpStatus.BAD_REQUEST),
+	
+	AREA_NOT_FOUND("area.not.found.exception", HttpStatus.NOT_FOUND),
+	AREA_REQUIRED("area.required.exception", HttpStatus.BAD_REQUEST),
+	AREA_ALREADY_EXISTS("area.already.exists.exception", HttpStatus.BAD_REQUEST),
+	AREA_NAME_REQUIRED("area.name.required.exception", HttpStatus.BAD_REQUEST),
+	AREA_ASSIGNED_CITY_ID_REQUIRED("area.assigned.city.id.required.exception", HttpStatus.BAD_REQUEST),
+	AREA_NAME_DOES_NOT_EXISTS("area.name.does.not.exists.exception", HttpStatus.BAD_REQUEST)
 	;
 
 	

@@ -40,7 +40,7 @@ public class CityService {
 	public CityDTO create(CityDTO city) throws FixedAssetsServiceException {
 
 		validationService.validateCreation(city);
-		city.setAvailableToAssign(true);
+		city.setAvailableToAssignArea(true);
 
 		City savedCity = repository.save(converterService.toEntity(city));
 
@@ -127,6 +127,22 @@ public class CityService {
 		City saveCity = repository.save(converterService.toEntity(city));
 
 		return converterService.toDTO(saveCity);
+	}
+
+	/**
+	 * This method can update city availability status too
+	 * 
+	 * @param id
+	 * @param isAvailableToAssignArea
+	 * @throws FixedAssetsServiceException
+	 */
+	public void updateAsRoot(String id, boolean isAvailableToAssignArea) throws FixedAssetsServiceException {
+
+		City city = repository.findById(id).get();
+		city.setAvailableToAssignArea(isAvailableToAssignArea);
+
+		repository.save(city);
+
 	}
 
 }

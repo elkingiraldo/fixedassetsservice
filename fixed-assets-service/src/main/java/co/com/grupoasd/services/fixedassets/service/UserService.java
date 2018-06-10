@@ -25,7 +25,7 @@ public class UserService {
 	private UserRepository repository;
 
 	@Autowired
-	private UserConverterSerice converterService;
+	private UserConverterService converterService;
 
 	@Autowired
 	private UserValidationService validationService;

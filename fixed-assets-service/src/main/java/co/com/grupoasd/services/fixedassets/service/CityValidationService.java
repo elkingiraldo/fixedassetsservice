@@ -133,8 +133,8 @@ public class CityValidationService {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_CODE_ALREADY_EXISTS);
 		}
 
-		if ((oldCityOptional.get().isAvailableToAssign() && !dto.isAvailableToAssign())
-				|| (!oldCityOptional.get().isAvailableToAssign() && dto.isAvailableToAssign())) {
+		if ((oldCityOptional.get().isAvailableToAssignArea() && !dto.isAvailableToAssignArea())
+				|| (!oldCityOptional.get().isAvailableToAssignArea() && dto.isAvailableToAssignArea())) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_AVAILABILITY_CANNOT_BE_UPDATED);
 		}
 
