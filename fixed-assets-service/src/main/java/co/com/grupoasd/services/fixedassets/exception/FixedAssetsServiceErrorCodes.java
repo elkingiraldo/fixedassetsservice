@@ -37,7 +37,24 @@ public enum FixedAssetsServiceErrorCodes implements IFixedAssetsServiceErrorMsg 
 	PARSE_EXCEPTION_PURCHASE_DATE_FROM("fixed.asset.purchase.date.from.parse.exception", HttpStatus.BAD_REQUEST),
 	PARSE_EXCEPTION_PURCHASE_DATE_TO("fixed.asset.purchase.date.to.parse.exception", HttpStatus.BAD_REQUEST),
 	
-	NOT_INFORMATION_FOR_UPDATING("fixed.asset.not.information.for.updating.exception", HttpStatus.BAD_REQUEST);
+	NOT_INFORMATION_FOR_UPDATING("fixed.asset.not.information.for.updating.exception", HttpStatus.BAD_REQUEST),
+	
+	CITY_NOT_FOUND("city.not.found.exception", HttpStatus.NOT_FOUND),
+	CITY_REQUIRED("city.required.exception", HttpStatus.BAD_REQUEST),
+	CITY_ID_REQUIRED("city.id.required.exception", HttpStatus.BAD_REQUEST),
+	CITY_NAME_REQUIRED("city.name.required.exception", HttpStatus.BAD_REQUEST),
+	CITY_CODE_REQUIRED("city.code.required.exception", HttpStatus.BAD_REQUEST),
+	CITY_NAME_ALREADY_EXISTS("city.name.already.exists.exception", HttpStatus.BAD_REQUEST),
+	CITY_CODE_ALREADY_EXISTS("city.code.already.exists.exception", HttpStatus.BAD_REQUEST),
+
+	USER_NOT_FOUND("user.not.found.exception", HttpStatus.NOT_FOUND),
+	USER_REQUIRED("user.required.exception", HttpStatus.BAD_REQUEST),
+	USER_ID_REQUIRED("user.id.required.exception", HttpStatus.BAD_REQUEST),
+	USER_FIRST_NAME_REQUIRED("user.first.name.required.exception", HttpStatus.BAD_REQUEST),
+	USER_LAST_NAME_REQUIRED("user.last.name.required.exception", HttpStatus.BAD_REQUEST),
+	USER_PERSONAL_ID_REQUIRED("user.personal.id.required.exception", HttpStatus.BAD_REQUEST),
+	USER_PERSONAL_ID_ALREADY_EXISTS("user.personal.id.already.exists.exception", HttpStatus.BAD_REQUEST)
+	;
 
 	
 	private String message;

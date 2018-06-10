@@ -9,6 +9,12 @@ import co.com.grupoasd.services.fixedassets.types.AssetStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * Data Transfer Object for fixed assets
+ * 
+ * @author egiraldo
+ *
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ApiModel(description = "Information about Fixed Assets")
 public class FixedAssetDTO implements Serializable {

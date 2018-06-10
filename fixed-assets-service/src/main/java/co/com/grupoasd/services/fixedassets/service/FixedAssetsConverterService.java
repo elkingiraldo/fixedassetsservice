@@ -13,7 +13,7 @@ import co.com.grupoasd.services.fixedassets.paging.PageInformation;
 import co.com.grupoasd.services.fixedassets.paging.Sort;
 
 /**
- * Converter service from DTO to entity and from entity to DTO
+ * Converter service from DTO to entity and from entity to DTO for fixed assets
  * 
  * @author egiraldo
  *

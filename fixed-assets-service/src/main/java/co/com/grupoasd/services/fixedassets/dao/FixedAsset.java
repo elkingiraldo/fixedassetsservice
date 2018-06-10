@@ -5,6 +5,12 @@ import java.util.Date;
 import co.com.grupoasd.services.fixedassets.types.AssetStatus;
 import co.com.grupoasd.services.fixedassets.types.AssetType;
 
+/**
+ * Entity for fixed assets
+ * 
+ * @author egiraldo
+ *
+ */
 public class FixedAsset {
 
 	private String id;

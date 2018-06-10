@@ -59,7 +59,7 @@ public class FixedAssetsController {
 
 		logger.debug("Search Filters: " + searchFilters + ", Order Fields: " + orderFields + "Paging Information: "
 				+ pagingInformation);
-		
+
 		logger.info("Search Filters: " + searchFilters + ", Order Fields: " + orderFields + "Paging Information: "
 				+ pagingInformation);
 
