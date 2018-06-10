@@ -94,8 +94,6 @@ public class CityValidationService {
 		validateCity(city);
 
 		validateAtributes(city);
-		validateName(city.getName());
-		validateCityCode(city.getCityCode());
 
 	}
 
@@ -117,19 +115,6 @@ public class CityValidationService {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_NOT_FOUND);
 		}
 
-		validateUpdateNameAndCode(dto, oldCityOptional.get());
-
-	}
-
-	/**
-	 * Validate update for name and city code
-	 * 
-	 * @param dto
-	 * @param oldCity
-	 * @throws FixedAssetsServiceException
-	 */
-	private void validateUpdateNameAndCode(CityDTO dto, City oldCity) throws FixedAssetsServiceException {
-
 		if (dto.getName() == null || dto.getName().isEmpty() || dto.getName().trim().isEmpty()) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_NAME_REQUIRED);
 		}
@@ -139,13 +124,18 @@ public class CityValidationService {
 		}
 
 		City findByName = repository.findByName(dto.getName());
-		if (!findByName.getId().equals(oldCity.getId())) {
+		if (!findByName.getId().equals(oldCityOptional.get().getId())) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_NAME_ALREADY_EXISTS);
 		}
 
 		City findByCityCode = repository.findByCityCode(dto.getCityCode());
-		if (!findByCityCode.getId().equals(oldCity.getId())) {
+		if (!findByCityCode.getId().equals(oldCityOptional.get().getId())) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_CODE_ALREADY_EXISTS);
+		}
+
+		if ((oldCityOptional.get().isAvailableToAssign() && !dto.isAvailableToAssign())
+				|| (!oldCityOptional.get().isAvailableToAssign() && dto.isAvailableToAssign())) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_AVAILABILITY_CANNOT_BE_UPDATED);
 		}
 
 	}

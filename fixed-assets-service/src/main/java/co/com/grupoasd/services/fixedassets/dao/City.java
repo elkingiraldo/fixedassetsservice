@@ -11,6 +11,7 @@ public class City {
 	private String id;
 	private String name;
 	private String cityCode;
+	private boolean availableToAssign;
 
 	public String getId() {
 		return id;
@@ -36,9 +37,18 @@ public class City {
 		this.cityCode = cityCode;
 	}
 
+	public boolean isAvailableToAssign() {
+		return availableToAssign;
+	}
+
+	public void setAvailableToAssign(boolean availableToAssign) {
+		this.availableToAssign = availableToAssign;
+	}
+
 	@Override
 	public String toString() {
-		return "City [id=" + id + ", name=" + name + ", cityCode=" + cityCode + "]";
+		return "City [id=" + id + ", name=" + name + ", cityCode=" + cityCode + ", availableToAssign="
+				+ availableToAssign + "]";
 	}
 
 }

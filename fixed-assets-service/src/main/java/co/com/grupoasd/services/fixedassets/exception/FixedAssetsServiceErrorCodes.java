@@ -46,6 +46,7 @@ public enum FixedAssetsServiceErrorCodes implements IFixedAssetsServiceErrorMsg 
 	CITY_CODE_REQUIRED("city.code.required.exception", HttpStatus.BAD_REQUEST),
 	CITY_NAME_ALREADY_EXISTS("city.name.already.exists.exception", HttpStatus.BAD_REQUEST),
 	CITY_CODE_ALREADY_EXISTS("city.code.already.exists.exception", HttpStatus.BAD_REQUEST),
+	CITY_AVAILABILITY_CANNOT_BE_UPDATED("city.availability.cannot.be.updated.exception", HttpStatus.BAD_REQUEST),
 
 	USER_NOT_FOUND("user.not.found.exception", HttpStatus.NOT_FOUND),
 	USER_REQUIRED("user.required.exception", HttpStatus.BAD_REQUEST),

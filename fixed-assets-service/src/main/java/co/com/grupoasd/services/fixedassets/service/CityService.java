@@ -40,6 +40,7 @@ public class CityService {
 	public CityDTO create(CityDTO city) throws FixedAssetsServiceException {
 
 		validationService.validateCreation(city);
+		city.setAvailableToAssign(true);
 
 		City savedCity = repository.save(converterService.toEntity(city));
 
@@ -58,6 +59,13 @@ public class CityService {
 		return converterService.toDtos(findAll);
 	}
 
+	/**
+	 * Retrieve a city by ID
+	 * 
+	 * @param id
+	 * @return
+	 * @throws FixedAssetsServiceException
+	 */
 	public CityDTO retrieveById(String id) throws FixedAssetsServiceException {
 
 		Optional<City> optionalCity = repository.findById(id);
