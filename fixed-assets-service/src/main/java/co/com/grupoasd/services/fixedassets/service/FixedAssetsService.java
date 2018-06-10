@@ -42,7 +42,7 @@ public class FixedAssetsService {
 	 */
 	public FixedAssetDTO create(FixedAssetDTO fixedAsset) throws FixedAssetsServiceException {
 
-		fixedAsset = fixedAssetsValidationService.validateCreation(fixedAsset);
+		fixedAssetsValidationService.validateCreation(fixedAsset);
 
 		FixedAsset savedFixedAsset = fixedAssetsRepository.save(fixedAssetsConverterService.toEntity(fixedAsset));
 

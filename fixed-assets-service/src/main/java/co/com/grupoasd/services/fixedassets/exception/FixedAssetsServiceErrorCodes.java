@@ -26,6 +26,9 @@ public enum FixedAssetsServiceErrorCodes implements IFixedAssetsServiceErrorMsg 
 	FIXED_ASSET_WIDTH_REQUIRED("fixed.asset.width.required.exception", HttpStatus.BAD_REQUEST),
 	FIXED_ASSET_LENGTH_REQUIRED("fixed.asset.length.required.exception", HttpStatus.BAD_REQUEST),
 	FIXED_ASSET_PURCHASE_VALUE_REQUIRED("fixed.asset.purchase.value.required.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_ASSIGNMENT_ID_REQUIRED("fixed.asset.assignment.id.required.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_ASSIGNMENT_TYPE_REQUIRED("fixed.asset.assignment.type.required.exception", HttpStatus.BAD_REQUEST),
+	FIXED_ASSET_ASSIGNMENT_TYPE_INVALID("fixed.asset.assignment.type.invalid.exception", HttpStatus.BAD_REQUEST),
 	
 	FIXED_ASSET_PURCHASE_DATE_REQUIRED("fixed.asset.purchase.date.required.exception", HttpStatus.BAD_REQUEST),
 	FIXED_ASSET_PURCHASE_DATE_CANT_BE_IN_FUTURE_REQUIRED("fixed.asset.purchase.date.cant.be.in.future.exception", HttpStatus.BAD_REQUEST),

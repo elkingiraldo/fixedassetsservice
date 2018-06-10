@@ -11,6 +11,7 @@ import co.com.grupoasd.services.fixedassets.dao.FixedAssetsRepository;
 import co.com.grupoasd.services.fixedassets.dtos.FixedAssetDTO;
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceErrorCodes;
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceException;
+import co.com.grupoasd.services.fixedassets.types.AssetAssignmentType;
 import co.com.grupoasd.services.fixedassets.types.AssetType;
 
 /**
@@ -25,14 +26,19 @@ public class FixedAssetsValidationService {
 	@Autowired
 	private FixedAssetsRepository fixedAssetsRepository;
 
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private AreaService areaService;
+
 	/**
 	 * It will validate step by step creation request
 	 * 
 	 * @param fixedAsset
-	 * @return
 	 * @throws FixedAssetsServiceException
 	 */
-	public FixedAssetDTO validateCreation(FixedAssetDTO dto) throws FixedAssetsServiceException {
+	public void validateCreation(FixedAssetDTO dto) throws FixedAssetsServiceException {
 
 		validateDto(dto);
 		validateName(dto.getName());
@@ -45,23 +51,72 @@ public class FixedAssetsValidationService {
 		validatePurchaseValue(dto.getPurchaseValue());
 		validateDates(dto);
 
-		dto = validateAndAutocompleteAssetType(dto);
-		dto = validateAndAutocompleteStockNumber(dto);
+		validateAssignment(dto);
+		validateAssetType(dto);
+		validateStockNumber(dto);
 
 		// TODO
 		// dto = autocompleteStatus(dto);
-		// persona o area y ciudad
 
-		return dto;
 	}
 
-	private FixedAssetDTO validateAndAutocompleteStockNumber(FixedAssetDTO dto) throws FixedAssetsServiceException {
+	/**
+	 * This method will validate the assignment of fixed asset
+	 * 
+	 * @param dto
+	 * @throws FixedAssetsServiceException
+	 */
+	private void validateAssignment(FixedAssetDTO dto) throws FixedAssetsServiceException {
+
+		if (dto.getAssignmentId() == null || dto.getAssignmentId().isEmpty()
+				|| dto.getAssignmentId().trim().isEmpty()) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_ID_REQUIRED);
+		}
+
+		if (dto.getAssignmentType() == null || dto.getAssignmentType().isEmpty()
+				|| dto.getAssignmentType().trim().isEmpty()) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_TYPE_REQUIRED);
+		}
+
+		try {
+			AssetAssignmentType assignmentType = AssetAssignmentType
+					.valueOf(dto.getAssignmentType().trim().toUpperCase());
+
+			if (assignmentType == null) {
+				throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_TYPE_INVALID);
+			}
+
+			dto.setAssignmentType(dto.getAssignmentType().trim().toUpperCase());
+
+			switch (assignmentType) {
+			case USER:
+				userService.retrieveByPersonalId(dto.getAssignmentId());
+				break;
+			case AREA:
+				areaService.retrieveByName(dto.getAssignmentId());
+				break;
+			default:
+				break;
+			}
+
+		} catch (IllegalArgumentException e) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_TYPE_INVALID);
+		}
+
+	}
+
+	/**
+	 * Validate and autocomplete stock number
+	 * 
+	 * @param dto
+	 * @throws FixedAssetsServiceException
+	 */
+	private void validateStockNumber(FixedAssetDTO dto) throws FixedAssetsServiceException {
 
 		String stockNumber = dto.getStockNumber();
 
 		if (stockNumber == null || stockNumber.isEmpty() || stockNumber.trim().isEmpty()) {
 			dto.setStockNumber(UUID.randomUUID().toString());
-			return dto;
 		}
 
 		FixedAsset oldFixedAsset = retrieveByStockNumber(stockNumber);
@@ -70,7 +125,6 @@ public class FixedAssetsValidationService {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_STOCK_NUMBER_ALREADY_EXISTS);
 		}
 
-		return dto;
 	}
 
 	/**
@@ -96,7 +150,7 @@ public class FixedAssetsValidationService {
 	 * @return
 	 * @throws FixedAssetsServiceException
 	 */
-	private FixedAssetDTO validateAndAutocompleteAssetType(FixedAssetDTO dto) throws FixedAssetsServiceException {
+	private void validateAssetType(FixedAssetDTO dto) throws FixedAssetsServiceException {
 
 		String typeString = dto.getType();
 
@@ -122,10 +176,7 @@ public class FixedAssetsValidationService {
 				dto.setType(AssetType.OTHERS.name());
 				break;
 			}
-
 		}
-
-		return dto;
 	}
 
 	/**

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import co.com.grupoasd.services.fixedassets.types.AssetAssignmentType;
 import co.com.grupoasd.services.fixedassets.types.AssetStatus;
 import co.com.grupoasd.services.fixedassets.types.AssetType;
 
@@ -31,6 +32,8 @@ public class FixedAsset {
 	private Date leavingDate;
 	private AssetStatus status;
 	private AssetType type;
+	private AssetAssignmentType assignmentType;
+	private String assignmentId;
 
 	public String getId() {
 		return id;
@@ -152,12 +155,29 @@ public class FixedAsset {
 		this.type = type;
 	}
 
+	public AssetAssignmentType getAssignmentType() {
+		return assignmentType;
+	}
+
+	public void setAssignmentType(AssetAssignmentType assignmentType) {
+		this.assignmentType = assignmentType;
+	}
+
+	public String getAssignmentId() {
+		return assignmentId;
+	}
+
+	public void setAssignmentId(String assignmentId) {
+		this.assignmentId = assignmentId;
+	}
+
 	@Override
 	public String toString() {
 		return "FixedAsset [id=" + id + ", name=" + name + ", description=" + description + ", serial=" + serial
 				+ ", stockNumber=" + stockNumber + ", color=" + color + ", weight=" + weight + ", high=" + high
 				+ ", width=" + width + ", length=" + length + ", purchaseValue=" + purchaseValue + ", purchaseDate="
-				+ purchaseDate + ", leavingDate=" + leavingDate + ", status=" + status + ", type=" + type + "]";
+				+ purchaseDate + ", leavingDate=" + leavingDate + ", status=" + status + ", type=" + type
+				+ ", assignmentType=" + assignmentType + ", assignmentId=" + assignmentId + "]";
 	}
 
 }
