@@ -45,7 +45,7 @@ public class AreaController {
 
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/byId/{id}")
 	public ResponseEntity<AreaDTO> getById(@PathVariable(value = "id") String id,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
 
@@ -55,7 +55,7 @@ public class AreaController {
 
 	}
 
-	@GetMapping("/{name}")
+	@GetMapping("/byName/{name}")
 	public ResponseEntity<AreaDTO> getByName(@PathVariable(value = "name") String name,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
 
@@ -65,7 +65,7 @@ public class AreaController {
 
 	}
 
-	@GetMapping("/{cityOfAssignmentId}")
+	@GetMapping("/byCityOfAssignmentId/{cityOfAssignmentId}")
 	public ResponseEntity<AreaDTO> getByCode(@PathVariable(value = "cityOfAssignmentId") String cityOfAssignmentId,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
 

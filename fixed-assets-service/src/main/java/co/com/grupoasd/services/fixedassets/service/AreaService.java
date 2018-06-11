@@ -11,7 +11,6 @@ import co.com.grupoasd.services.fixedassets.dao.AreaRepository;
 import co.com.grupoasd.services.fixedassets.dtos.AreaDTO;
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceErrorCodes;
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceException;
-import co.com.grupoasd.services.fixedassets.types.AreaName;
 
 /**
  * This service will manage areas into the company
@@ -44,6 +43,7 @@ public class AreaService {
 	public AreaDTO create(AreaDTO area) throws FixedAssetsServiceException {
 
 		validationService.validateCreation(area);
+		area.setName(area.getName().trim().toUpperCase());
 		cityService.updateAsRoot(area.getCityOfAssignmentId(), false);
 
 		Area savedArea = repository.save(converterService.toEntity(area));
@@ -88,30 +88,7 @@ public class AreaService {
 	 */
 	public AreaDTO retrieveByName(String name) throws FixedAssetsServiceException {
 
-		Area area = new Area();
-
-		switch (name.trim().toUpperCase()) {
-		case "COMMERCIAL":
-			area = repository.findByName(AreaName.COMMERCIAL);
-			break;
-		case "DEVELOPMENT":
-			area = repository.findByName(AreaName.DEVELOPMENT);
-			break;
-		case "ADMINISTRATIVE":
-			area = repository.findByName(AreaName.ADMINISTRATIVE);
-			break;
-		case "HUMAN_RESOURCES":
-			area = repository.findByName(AreaName.HUMAN_RESOURCES);
-			break;
-		case "BILLING":
-			area = repository.findByName(AreaName.BILLING);
-			break;
-		case "ROUTING":
-			area = repository.findByName(AreaName.ROUTING);
-			break;
-		default:
-			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_NAME_DOES_NOT_EXISTS);
-		}
+		Area area = repository.findByName(name.trim().toUpperCase());
 
 		if (area == null) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_NOT_FOUND);
@@ -132,7 +109,7 @@ public class AreaService {
 		Area area = repository.findByCityOfAssignmentId(cityOfAssignmentId);
 
 		if (area == null) {
-			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_NOT_FOUND);
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_UPDATE_NOT_FOUND);
 		}
 
 		return converterService.toDTO(area);
@@ -149,7 +126,7 @@ public class AreaService {
 		Optional<Area> optionalArea = repository.findById(id);
 
 		if (!optionalArea.isPresent()) {
-			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_NOT_FOUND);
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_DELETE_NOT_FOUND);
 		}
 
 		cityService.updateAsRoot(optionalArea.get().getCityOfAssignmentId(), true);

@@ -11,7 +11,6 @@ import co.com.grupoasd.services.fixedassets.dtos.AreaDTO;
 import co.com.grupoasd.services.fixedassets.dtos.CityDTO;
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceErrorCodes;
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceException;
-import co.com.grupoasd.services.fixedassets.types.AreaName;
 
 /**
  * This service will validate all request for areas
@@ -74,20 +73,10 @@ public class AreaValidationService {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_NAME_REQUIRED);
 		}
 
-		try {
-			AreaName areaName = AreaName.valueOf(name.trim().toUpperCase());
-			if (areaName == null) {
-				throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_NAME_DOES_NOT_EXISTS);
-			}
+		Area area = repository.findByName(name.trim().toUpperCase());
 
-			Area area = repository.findByName(areaName);
-
-			if (area != null) {
-				throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_ALREADY_EXISTS);
-			}
-
-		} catch (IllegalArgumentException e) {
-			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_NAME_DOES_NOT_EXISTS);
+		if (area != null) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_ALREADY_EXISTS);
 		}
 
 	}
@@ -155,20 +144,10 @@ public class AreaValidationService {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_NAME_REQUIRED);
 		}
 
-		try {
-			AreaName areaName = AreaName.valueOf(dto.getName().trim().toUpperCase());
-			if (areaName == null) {
-				throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_NAME_DOES_NOT_EXISTS);
-			}
+		Area oldArea = repository.findByName(dto.getName().trim().toUpperCase());
 
-			Area oldArea = repository.findByName(areaName);
-
-			if (oldArea != null && !oldArea.getId().equals(oldArea.getId())) {
-				throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_ALREADY_EXISTS);
-			}
-
-		} catch (IllegalArgumentException e) {
-			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_NAME_DOES_NOT_EXISTS);
+		if (oldArea != null && !oldArea.getId().equals(dto.getId())) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_ALREADY_EXISTS);
 		}
 
 	}
@@ -184,7 +163,7 @@ public class AreaValidationService {
 		Optional<Area> optionalArea = repository.findById(id);
 
 		if (!optionalArea.isPresent()) {
-			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_NOT_FOUND);
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.AREA_UPDATE_NOT_FOUND);
 		}
 
 	}

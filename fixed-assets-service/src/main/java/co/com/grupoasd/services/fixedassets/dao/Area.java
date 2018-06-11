@@ -2,8 +2,6 @@ package co.com.grupoasd.services.fixedassets.dao;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import co.com.grupoasd.services.fixedassets.types.AreaName;
-
 /**
  * Entity for areas
  * 
@@ -14,7 +12,7 @@ import co.com.grupoasd.services.fixedassets.types.AreaName;
 public class Area {
 
 	private String id;
-	private AreaName name;
+	private String name;
 	private String cityOfAssignmentId;
 
 	public String getId() {
@@ -25,11 +23,11 @@ public class Area {
 		this.id = id;
 	}
 
-	public AreaName getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(AreaName name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

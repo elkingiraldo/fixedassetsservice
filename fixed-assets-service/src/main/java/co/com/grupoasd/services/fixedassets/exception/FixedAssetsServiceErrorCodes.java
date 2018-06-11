@@ -63,11 +63,12 @@ public enum FixedAssetsServiceErrorCodes implements IFixedAssetsServiceErrorMsg 
 	USER_PERSONAL_ID_ALREADY_EXISTS("user.personal.id.already.exists.exception", HttpStatus.BAD_REQUEST),
 	
 	AREA_NOT_FOUND("area.not.found.exception", HttpStatus.NOT_FOUND),
+	AREA_DELETE_NOT_FOUND("area.delete.not.found.exception", HttpStatus.NOT_FOUND),
+	AREA_UPDATE_NOT_FOUND("area.update.not.found.exception", HttpStatus.NOT_FOUND),
 	AREA_REQUIRED("area.required.exception", HttpStatus.BAD_REQUEST),
 	AREA_ALREADY_EXISTS("area.already.exists.exception", HttpStatus.BAD_REQUEST),
 	AREA_NAME_REQUIRED("area.name.required.exception", HttpStatus.BAD_REQUEST),
 	AREA_ASSIGNED_CITY_ID_REQUIRED("area.assigned.city.id.required.exception", HttpStatus.BAD_REQUEST),
-	AREA_NAME_DOES_NOT_EXISTS("area.name.does.not.exists.exception", HttpStatus.BAD_REQUEST)
 	;
 
 	
