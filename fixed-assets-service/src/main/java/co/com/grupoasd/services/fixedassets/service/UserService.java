@@ -1,7 +1,6 @@
 package co.com.grupoasd.services.fixedassets.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,8 +37,12 @@ public class UserService {
 	 * @throws FixedAssetsServiceException
 	 */
 	public UserDTO create(UserDTO user) throws FixedAssetsServiceException {
+
 		validationService.validateCreation(user);
-		return null;
+
+		User savedUser = repository.save(converterService.toEntity(user));
+
+		return converterService.toDTO(savedUser);
 	}
 
 	/**
@@ -94,13 +97,13 @@ public class UserService {
 	 */
 	public void delete(String id) throws FixedAssetsServiceException {
 
-		Optional<User> optionalUser = repository.findById(id);
+		User user = repository.findByPersonalId(id);
 
-		if (!optionalUser.isPresent()) {
+		if (user == null) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.USER_NOT_FOUND);
 		}
 
-		repository.delete(optionalUser.get());
+		repository.delete(user);
 
 	}
 

@@ -1,6 +1,5 @@
 package co.com.grupoasd.services.fixedassets.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,7 +117,7 @@ public class UserValidationService {
 		validateFirstName(user.getFirstName());
 		validateLastName(user.getLastName());
 		validateCityWorkId(user.getCityWorkId());
-		validateUpdatePersonalId(user.getPersonalId());
+		validateUpdatePersonalId(user);
 
 	}
 
@@ -136,33 +135,29 @@ public class UserValidationService {
 
 		Optional<User> optionalEntity = repository.findById(id);
 		if (!optionalEntity.isPresent()) {
-			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.USER_NOT_FOUND);
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.USER_UPDATE_NOT_FOUND);
 		}
 	}
 
 	/**
 	 * Validate unique ID in DB
 	 * 
-	 * @param personalId
+	 * @param dto
 	 * @throws FixedAssetsServiceException
 	 */
-	private void validateUpdatePersonalId(String personalId) throws FixedAssetsServiceException {
+	private void validateUpdatePersonalId(UserDTO dto) throws FixedAssetsServiceException {
 
-		if (personalId == null || personalId.isEmpty() || personalId.trim().isEmpty()) {
+		if (dto.getPersonalId() == null || dto.getPersonalId().isEmpty() || dto.getPersonalId().trim().isEmpty()) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.USER_PERSONAL_ID_REQUIRED);
 		}
 
-		List<User> listEntities = repository.findAll();
-		int countUsers = 0;
-		for (User user : listEntities) {
-			if (user.getId().equals(personalId)) {
-				countUsers++;
-			}
-		}
+		User userToUpdate = repository.findById(dto.getId()).get();
+		User user = repository.findByPersonalId(dto.getPersonalId());
 
-		if (countUsers > 1) {
+		if (user != null && !user.getPersonalId().equals(userToUpdate.getPersonalId())) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.USER_PERSONAL_ID_ALREADY_EXISTS);
 		}
+
 	}
 
 }

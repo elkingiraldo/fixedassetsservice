@@ -19,11 +19,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
-	public static final Contact DEFAULT_CONTACT = new Contact("Telintel Development", "https://www.go4clients.com",
-			"dev@telintel.net");
-	public static final ApiInfo DEFAULT = new ApiInfo("Api Documentation for the voice campaigns management service",
-			"This module is in charge of managing the voice campaigns for Go4Clients V3", "1.0", "urn:tos",
-			DEFAULT_CONTACT, "Telintel rights reserved", "https://www.telintel.com", new ArrayList<VendorExtension>());
+	public static final Contact DEFAULT_CONTACT = new Contact("Elkin Giraldo", "elkin.giraldo.pinedo@gmail.com",
+			"elkin.giraldo.pinedo@gmail.com");
+	public static final ApiInfo DEFAULT = new ApiInfo("Api Documentation for fixed assets",
+			"This module is in charge of managing fixed assets for a company", "1.0", "urn:tos", DEFAULT_CONTACT,
+			"Elkin Giraldo rights reserved", "elkin.giraldo.pinedo@gmail.com", new ArrayList<VendorExtension>());
 
 	private static final Set<String> DEFAULT_PRODUCES = new HashSet<>(Arrays.asList("application/json"));
 

@@ -56,7 +56,7 @@ public class CityValidationService {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_NAME_REQUIRED);
 		}
 
-		City findByName = repository.findByName(name.trim().toLowerCase());
+		City findByName = repository.findByName(name.trim().toUpperCase());
 
 		if (findByName != null) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_NAME_ALREADY_EXISTS);

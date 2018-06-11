@@ -20,7 +20,7 @@ import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceExceptio
 import co.com.grupoasd.services.fixedassets.service.UserService;
 
 @RestController
-@RequestMapping("/fixedassets/user/v1.0")
+@RequestMapping("/fixedassets/users/v1.0")
 public class UserController {
 
 	@Autowired
