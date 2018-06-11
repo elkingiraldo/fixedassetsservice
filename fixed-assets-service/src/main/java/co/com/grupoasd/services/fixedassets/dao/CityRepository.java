@@ -1,5 +1,7 @@
 package co.com.grupoasd.services.fixedassets.dao;
 
+import java.util.List;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
@@ -12,6 +14,6 @@ public interface CityRepository extends MongoRepository<City, String> {
 
 	public City findByName(String name);
 
-	public City findByCityCode(String cityCode);
+	public List<City> findByCityCode(String cityCode);
 
 }

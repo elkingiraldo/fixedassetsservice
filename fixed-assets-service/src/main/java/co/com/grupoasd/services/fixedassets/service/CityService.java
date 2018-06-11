@@ -40,6 +40,7 @@ public class CityService {
 	public CityDTO create(CityDTO city) throws FixedAssetsServiceException {
 
 		validationService.validateCreation(city);
+		city.setName(city.getName().trim().toUpperCase());
 		city.setAvailableToAssignArea(true);
 
 		City savedCity = repository.save(converterService.toEntity(city));
@@ -86,7 +87,7 @@ public class CityService {
 	 */
 	public CityDTO retrieveByName(String name) throws FixedAssetsServiceException {
 
-		City entity = repository.findByName(name);
+		City entity = repository.findByName(name.trim().toUpperCase());
 
 		if (entity == null) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_NOT_FOUND);
@@ -102,15 +103,15 @@ public class CityService {
 	 * @return
 	 * @throws FixedAssetsServiceException
 	 */
-	public CityDTO retrieveByCode(String code) throws FixedAssetsServiceException {
+	public List<CityDTO> retrieveByCode(String code) throws FixedAssetsServiceException {
 
-		City entity = repository.findByCityCode(code);
+		List<City> entities = repository.findByCityCode(code);
 
-		if (entity == null) {
+		if (entities.size() == 0) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_NOT_FOUND);
 		}
 
-		return converterService.toDTO(entity);
+		return converterService.toDtos(entities);
 	}
 
 	/**
@@ -123,6 +124,7 @@ public class CityService {
 	public CityDTO update(CityDTO city) throws FixedAssetsServiceException {
 
 		validationService.validateUpdate(city);
+		city.setName(city.getName().trim().toUpperCase());
 
 		City saveCity = repository.save(converterService.toEntity(city));
 

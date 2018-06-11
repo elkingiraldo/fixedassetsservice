@@ -42,13 +42,6 @@ public class CityValidationService {
 		if (cityCode == null || cityCode.isEmpty() || cityCode.trim().isEmpty()) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_CODE_REQUIRED);
 		}
-
-		City findByCityCode = repository.findByCityCode(cityCode);
-
-		if (findByCityCode != null) {
-			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_CODE_ALREADY_EXISTS);
-		}
-
 	}
 
 	/**
@@ -63,7 +56,7 @@ public class CityValidationService {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_NAME_REQUIRED);
 		}
 
-		City findByName = repository.findByName(name);
+		City findByName = repository.findByName(name.trim().toLowerCase());
 
 		if (findByName != null) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_NAME_ALREADY_EXISTS);
@@ -112,7 +105,7 @@ public class CityValidationService {
 		Optional<City> oldCityOptional = repository.findById(dto.getId());
 
 		if (!oldCityOptional.isPresent()) {
-			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_NOT_FOUND);
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_NOT_FOUND_UPDATE);
 		}
 
 		if (dto.getName() == null || dto.getName().isEmpty() || dto.getName().trim().isEmpty()) {
@@ -123,14 +116,9 @@ public class CityValidationService {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_CODE_REQUIRED);
 		}
 
-		City findByName = repository.findByName(dto.getName());
-		if (!findByName.getId().equals(oldCityOptional.get().getId())) {
+		City findByName = repository.findByName(dto.getName().trim().toUpperCase());
+		if (findByName != null && !findByName.getId().equals(oldCityOptional.get().getId())) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_NAME_ALREADY_EXISTS);
-		}
-
-		City findByCityCode = repository.findByCityCode(dto.getCityCode());
-		if (!findByCityCode.getId().equals(oldCityOptional.get().getId())) {
-			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.CITY_CODE_ALREADY_EXISTS);
 		}
 
 		if ((oldCityOptional.get().isAvailableToAssignArea() && !dto.isAvailableToAssignArea())

@@ -44,7 +44,7 @@ public class CityController {
 
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/byId/{id}")
 	public ResponseEntity<CityDTO> getById(@PathVariable(value = "id") String id,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
 
@@ -54,7 +54,7 @@ public class CityController {
 
 	}
 
-	@GetMapping("/{name}")
+	@GetMapping("/byName/{name}")
 	public ResponseEntity<CityDTO> getByName(@PathVariable(value = "name") String name,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
 
@@ -64,13 +64,13 @@ public class CityController {
 
 	}
 
-	@GetMapping("/{code}")
-	public ResponseEntity<CityDTO> getByCode(@PathVariable(value = "code") String code,
+	@GetMapping("/byCode/{code}")
+	public ResponseEntity<List<CityDTO>> getByCode(@PathVariable(value = "code") String code,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
 
-		CityDTO cityFound = cityService.retrieveByCode(code);
+		List<CityDTO> cityFound = cityService.retrieveByCode(code);
 
-		return new ResponseEntity<CityDTO>(cityFound, HttpStatus.OK);
+		return new ResponseEntity<List<CityDTO>>(cityFound, HttpStatus.OK);
 
 	}
 

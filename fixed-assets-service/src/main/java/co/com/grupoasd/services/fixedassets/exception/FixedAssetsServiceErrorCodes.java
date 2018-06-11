@@ -37,19 +37,19 @@ public enum FixedAssetsServiceErrorCodes implements IFixedAssetsServiceErrorMsg 
 	FIXED_ASSET_PURCHASE_DATE_NOT_LATER_LEAVING_DATE("fixed.asset.purchase.date.not.later.leaving.date.exception", HttpStatus.BAD_REQUEST),
 	FIXED_ASSET_LEAVING_DATE_NOT_BEFORE_PURCHASE_DATE("fixed.asset.leaving.date.not.before.purchase.date.exception", HttpStatus.BAD_REQUEST),
 	
-	PARSE_EXCEPTION_PURCHASE_DATE_FROM("fixed.asset.purchase.date.from.parse.exception", HttpStatus.BAD_REQUEST),
-	PARSE_EXCEPTION_PURCHASE_DATE_TO("fixed.asset.purchase.date.to.parse.exception", HttpStatus.BAD_REQUEST),
-	PARSE_EXCEPTION_LEAVING_DATE("fixed.asset.leaving.date.parse.exception", HttpStatus.BAD_REQUEST),
+	PARSE_EXCEPTION_PURCHASE_DATE_FROM("fixed.asset.purchase.date.from.parse.exception", HttpStatus.INTERNAL_SERVER_ERROR),
+	PARSE_EXCEPTION_PURCHASE_DATE_TO("fixed.asset.purchase.date.to.parse.exception", HttpStatus.INTERNAL_SERVER_ERROR),
+	PARSE_EXCEPTION_LEAVING_DATE("fixed.asset.leaving.date.parse.exception", HttpStatus.INTERNAL_SERVER_ERROR),
 	
 	NOT_INFORMATION_FOR_UPDATING("fixed.asset.not.information.for.updating.exception", HttpStatus.BAD_REQUEST),
 	
 	CITY_NOT_FOUND("city.not.found.exception", HttpStatus.NOT_FOUND),
+	CITY_NOT_FOUND_UPDATE("city.not.found.update.exception", HttpStatus.NOT_FOUND),
 	CITY_REQUIRED("city.required.exception", HttpStatus.BAD_REQUEST),
 	CITY_ID_REQUIRED("city.id.required.exception", HttpStatus.BAD_REQUEST),
 	CITY_NAME_REQUIRED("city.name.required.exception", HttpStatus.BAD_REQUEST),
 	CITY_CODE_REQUIRED("city.code.required.exception", HttpStatus.BAD_REQUEST),
 	CITY_NAME_ALREADY_EXISTS("city.name.already.exists.exception", HttpStatus.BAD_REQUEST),
-	CITY_CODE_ALREADY_EXISTS("city.code.already.exists.exception", HttpStatus.BAD_REQUEST),
 	CITY_AVAILABILITY_CANNOT_BE_UPDATED("city.availability.cannot.be.updated.exception", HttpStatus.BAD_REQUEST),
 	CITY_ALREADY_HAS_ASSIGNMENT_AREA("city.already.has.assigned.area.exception", HttpStatus.BAD_REQUEST),
 
