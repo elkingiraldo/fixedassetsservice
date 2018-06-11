@@ -1,12 +1,13 @@
 package co.com.grupoasd.services.fixedassets.service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import co.com.grupoasd.services.fixedassets.constants.FixedAssetsServiceConstants;
 import co.com.grupoasd.services.fixedassets.dtos.FixedAssetDTO;
@@ -21,8 +22,10 @@ import co.com.grupoasd.services.fixedassets.types.AssetStatus;
  * @author egiraldo
  *
  */
-@Service
+@Component
 public class ExpirationLeavingDateScheduled {
+
+	SimpleDateFormat format = new SimpleDateFormat(FixedAssetsServiceConstants.DATE_QUERY_FORMAT);
 
 	@Autowired
 	private FixedAssetsService fixedAssetService;
@@ -31,7 +34,7 @@ public class ExpirationLeavingDateScheduled {
 	public void expirateLeavingDate() throws FixedAssetsServiceException {
 
 		Map<String, String> searchFilters = new HashMap<>();
-		searchFilters.put("LEAVING_DATE", new Date().toString());
+		searchFilters.put("LEAVING_DATE", format.format(new Date()));
 
 		PageResponseDTO<FixedAssetDTO> pageResponseDTO = fixedAssetService.get(searchFilters, null, null);
 
