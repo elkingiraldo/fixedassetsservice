@@ -52,10 +52,25 @@ public class FixedAssetsValidationService {
 		validatePurchaseValue(dto.getPurchaseValue());
 		validateDates(dto);
 
+		validateColor(dto);
 		validateAssignment(dto);
 		validateAssetType(dto);
 		validateStockNumber(dto);
 
+	}
+
+	/**
+	 * Validate color and save it with capital letters
+	 * 
+	 * @param dto
+	 * @throws FixedAssetsServiceException
+	 */
+	private void validateColor(FixedAssetDTO dto) throws FixedAssetsServiceException {
+		if (dto.getColor() == null || dto.getColor().isEmpty() || dto.getColor().trim().isEmpty()) {
+			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_COLOR_REQUIRED);
+		}
+
+		dto.setColor(dto.getColor().trim().toUpperCase());
 	}
 
 	/**
@@ -89,7 +104,7 @@ public class FixedAssetsValidationService {
 							FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_ID_REQUIRED);
 				}
 				userService.retrieveByPersonalId(dto.getAssignmentId());
-				dto.setStatus(AssetStatus.ASSINGNED.name());
+				dto.setStatus(AssetStatus.ASSIGNED.name());
 				break;
 			case AREA:
 				if (dto.getAssignmentId() == null || dto.getAssignmentId().isEmpty()
@@ -98,7 +113,7 @@ public class FixedAssetsValidationService {
 							FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_ID_REQUIRED);
 				}
 				areaService.retrieveByName(dto.getAssignmentId());
-				dto.setStatus(AssetStatus.ASSINGNED.name());
+				dto.setStatus(AssetStatus.ASSIGNED.name());
 				break;
 			case STOCK:
 				dto.setStatus(AssetStatus.ACTIVE.name());
@@ -194,10 +209,10 @@ public class FixedAssetsValidationService {
 	 */
 	private void validateDates(FixedAssetDTO dto) throws FixedAssetsServiceException {
 
-		Date purchaseDate = validatePurchaseDate(dto.getPurchaseDate());
-		Date leavingDate = validateLeavingDate(dto.getLeavingDate());
+		validatePurchaseDate(dto.getPurchaseDate());
+		validateLeavingDate(dto.getLeavingDate());
 
-		if (purchaseDate.after(leavingDate)) {
+		if (dto.getPurchaseDate().after(dto.getLeavingDate())) {
 			throw new FixedAssetsServiceException(
 					FixedAssetsServiceErrorCodes.FIXED_ASSET_PURCHASE_DATE_NOT_LATER_LEAVING_DATE);
 		}
@@ -205,13 +220,12 @@ public class FixedAssetsValidationService {
 	}
 
 	/**
-	 * Validate leaving date requirements and return it
+	 * Validate leaving date requirements
 	 * 
 	 * @param leavingDate
-	 * @return
 	 * @throws FixedAssetsServiceException
 	 */
-	private Date validateLeavingDate(Date leavingDate) throws FixedAssetsServiceException {
+	private void validateLeavingDate(Date leavingDate) throws FixedAssetsServiceException {
 		if (leavingDate == null) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_LEAVING_DATE_REQUIRED);
 		}
@@ -220,18 +234,15 @@ public class FixedAssetsValidationService {
 			throw new FixedAssetsServiceException(
 					FixedAssetsServiceErrorCodes.FIXED_ASSET_LEAVING_DATE_CANT_BE_IN_PAST_REQUIRED);
 		}
-
-		return leavingDate;
 	}
 
 	/**
-	 * Validate purchase date requirements and return it
+	 * Validate purchase date requirements
 	 * 
 	 * @param purchaseDate
-	 * @return
 	 * @throws FixedAssetsServiceException
 	 */
-	private Date validatePurchaseDate(Date purchaseDate) throws FixedAssetsServiceException {
+	private void validatePurchaseDate(Date purchaseDate) throws FixedAssetsServiceException {
 		if (purchaseDate == null) {
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_PURCHASE_DATE_REQUIRED);
 		}
@@ -240,8 +251,6 @@ public class FixedAssetsValidationService {
 			throw new FixedAssetsServiceException(
 					FixedAssetsServiceErrorCodes.FIXED_ASSET_PURCHASE_DATE_CANT_BE_IN_FUTURE_REQUIRED);
 		}
-
-		return purchaseDate;
 	}
 
 	/**

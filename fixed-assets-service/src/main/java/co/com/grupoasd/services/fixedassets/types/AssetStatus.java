@@ -8,6 +8,6 @@ package co.com.grupoasd.services.fixedassets.types;
  */
 public enum AssetStatus {
 
-	ACTIVE, REPAIRING, AVAILABLE, ASSINGNED, RETIRED;
+	ACTIVE, REPAIRING, AVAILABLE, ASSIGNED, RETIRED;
 
 }
