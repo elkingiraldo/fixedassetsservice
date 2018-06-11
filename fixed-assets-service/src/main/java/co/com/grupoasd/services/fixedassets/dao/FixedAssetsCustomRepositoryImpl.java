@@ -71,6 +71,9 @@ public class FixedAssetsCustomRepositoryImpl implements FixedAssetsCustomReposit
 				case STATUS:
 					query.addCriteria(Criteria.where("status").is(filterValue));
 					break;
+				case NOT_STATUS:
+					query.addCriteria(Criteria.where("status").ne(filterValue));
+					break;
 				case STOCK_NUMBER:
 					query.addCriteria(Criteria.where("stockNumber").is(filterValue));
 					break;
@@ -144,6 +147,13 @@ public class FixedAssetsCustomRepositoryImpl implements FixedAssetsCustomReposit
 					}
 					break;
 				case STATUS:
+					if (criteriaValue.equals(SortDirection.DESC)) {
+						orders.add(new Order(Direction.DESC, "status"));
+					} else {
+						orders.add(new Order(Direction.ASC, "status"));
+					}
+					break;
+				case NOT_STATUS:
 					if (criteriaValue.equals(SortDirection.DESC)) {
 						orders.add(new Order(Direction.DESC, "status"));
 					} else {

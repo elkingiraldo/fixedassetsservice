@@ -35,10 +35,11 @@ public class ExpirationLeavingDateScheduled {
 
 		Map<String, String> searchFilters = new HashMap<>();
 		searchFilters.put("LEAVING_DATE", format.format(new Date()));
+		searchFilters.put("NOT_STATUS", "RETIRED");
 
 		PageResponseDTO<FixedAssetDTO> pageResponseDTO = fixedAssetService.get(searchFilters, null, null);
 
-		if (pageResponseDTO.getSize() > 0) {
+		if (pageResponseDTO.getTotalElements() > 0) {
 
 			for (FixedAssetDTO dto : pageResponseDTO.getContent()) {
 
