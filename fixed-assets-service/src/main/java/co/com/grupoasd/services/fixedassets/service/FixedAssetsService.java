@@ -1,6 +1,5 @@
 package co.com.grupoasd.services.fixedassets.service;
 
-import java.text.ParseException;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -65,7 +64,6 @@ public class FixedAssetsService {
 	 * @param pagingInformation
 	 * @return
 	 * @throws FixedAssetsServiceException
-	 * @throws ParseException
 	 */
 	public PageResponseDTO<FixedAssetDTO> get(Map<String, String> searchFilters, Map<String, SortDirection> orderFields,
 			PagingInformation pagingInformation) throws FixedAssetsServiceException {
@@ -83,7 +81,7 @@ public class FixedAssetsService {
 	/**
 	 * This method will update fixed asset and save it in DB
 	 * 
-	 * @param fixedAsset
+	 * @param dto
 	 * @return
 	 * @throws FixedAssetsServiceException
 	 */

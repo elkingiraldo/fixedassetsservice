@@ -36,8 +36,9 @@ public class AreaService {
 	/**
 	 * Method for creating a new area into the company
 	 * 
-	 * @param area
-	 * @return
+	 * @param area,
+	 *            area entity
+	 * @return {@link AreaDTO}
 	 * @throws FixedAssetsServiceException
 	 */
 	public AreaDTO create(AreaDTO area) throws FixedAssetsServiceException {
@@ -54,7 +55,7 @@ public class AreaService {
 	/**
 	 * Retrieve all areas into the company
 	 * 
-	 * @return
+	 * @return {@link List<AreaDTO>}, list of dto transformed
 	 */
 	public List<AreaDTO> retrieveAllAreas() {
 		List<Area> areaList = repository.findAll();
@@ -64,8 +65,9 @@ public class AreaService {
 	/**
 	 * Retrieve area by ID
 	 * 
-	 * @param id
-	 * @return
+	 * @param id,
+	 *            ID of area to find
+	 * @return {@link AreaDTO}, area found and transformed
 	 * @throws FixedAssetsServiceException
 	 */
 	public AreaDTO retrieveById(String id) throws FixedAssetsServiceException {
@@ -82,9 +84,11 @@ public class AreaService {
 	/**
 	 * Retrieve area by name
 	 * 
-	 * @param name
-	 * @return
-	 * @throws FixedAssetsServiceException
+	 * @param name,
+	 *            name of area
+	 * @return {@link AreaDTO}
+	 * @throws FixedAssetsServiceException,
+	 *             exception management
 	 */
 	public AreaDTO retrieveByName(String name) throws FixedAssetsServiceException {
 
@@ -100,9 +104,11 @@ public class AreaService {
 	/**
 	 * Retrieve area by assigned city ID
 	 * 
-	 * @param cityOfAssignmentId
-	 * @return
-	 * @throws FixedAssetsServiceException
+	 * @param cityOfAssignmentId,
+	 *            ID of the city that was assigned
+	 * @return {@linkAreaDTO}, AreaDTO found
+	 * @throws FixedAssetsServiceException,
+	 *             exception management
 	 */
 	public AreaDTO retrieveByCityOfAssignmentId(String cityOfAssignmentId) throws FixedAssetsServiceException {
 
@@ -118,8 +124,10 @@ public class AreaService {
 	/**
 	 * This method will delete an area
 	 * 
-	 * @param id
-	 * @throws FixedAssetsServiceException
+	 * @param id,
+	 *            ID of area to delete
+	 * @throws FixedAssetsServiceException,
+	 *             exception management
 	 */
 	public void delete(String id) throws FixedAssetsServiceException {
 
@@ -138,9 +146,11 @@ public class AreaService {
 	/**
 	 * Update an area for company
 	 * 
-	 * @param area
-	 * @return
-	 * @throws FixedAssetsServiceException
+	 * @param area,
+	 *            area DTO to update
+	 * @return {@link AreaDTO}
+	 * @throws FixedAssetsServiceException,
+	 *             exception management
 	 */
 	public AreaDTO update(AreaDTO area) throws FixedAssetsServiceException {
 

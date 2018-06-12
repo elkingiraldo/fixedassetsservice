@@ -40,7 +40,7 @@ public class FixedAssetsValidationService {
 	/**
 	 * It will validate step by step creation request
 	 * 
-	 * @param fixedAsset
+	 * @param dto
 	 * @throws FixedAssetsServiceException
 	 */
 	public void validateCreation(FixedAssetDTO dto) throws FixedAssetsServiceException {
@@ -422,7 +422,7 @@ public class FixedAssetsValidationService {
 	/**
 	 * This method will validate the request to update it
 	 * 
-	 * @param fixedAsset
+	 * @param dto
 	 * @return
 	 * @throws FixedAssetsServiceException
 	 */

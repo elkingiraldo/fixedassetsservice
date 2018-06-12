@@ -21,11 +21,15 @@ public class GetRequestSerializer {
 	/**
 	 * Compress into a single header multiple headers
 	 * 
-	 * @param filters
-	 * @param orderFields
-	 * @param pagingInformation
+	 * @param filters,
+	 *            search filters
+	 * @param orderFields,order
+	 *            filters
+	 * @param pagingInformation,
+	 *            paging information
 	 * @return
-	 * @throws InvalidHeaderParameterException
+	 * @throws InvalidHeaderParameterException,
+	 *             exception finding headers
 	 */
 	public Map<String, String> compressHeaders(Map<String, String> filters, Map<String, SortDirection> orderFields,
 			PagingInformation pagingInformation) throws InvalidHeaderParameterException {

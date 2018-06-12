@@ -21,8 +21,9 @@ public class AreaConverterService {
 	/**
 	 * Convert entity to DTO
 	 * 
-	 * @param entity
-	 * @return
+	 * @param entity,
+	 *            area entity
+	 * @return {@link AreaDTO}
 	 */
 	public AreaDTO toDTO(Area entity) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -33,8 +34,9 @@ public class AreaConverterService {
 	/**
 	 * Convert DTO to entity
 	 * 
-	 * @param dto
-	 * @return
+	 * @param dto,
+	 *            area entered DTO
+	 * @return {@link Area}
 	 */
 	public Area toEntity(AreaDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -45,8 +47,9 @@ public class AreaConverterService {
 	/**
 	 * Paging multiples entities
 	 * 
-	 * @param entities
-	 * @return
+	 * @param entities,
+	 *            entities to transform
+	 * @return {@link List<AreaDTO>}
 	 */
 
 	public List<AreaDTO> toDtos(List<Area> entities) {
