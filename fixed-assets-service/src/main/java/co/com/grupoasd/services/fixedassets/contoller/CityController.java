@@ -18,6 +18,12 @@ import co.com.grupoasd.services.fixedassets.dtos.CityDTO;
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceException;
 import co.com.grupoasd.services.fixedassets.service.CityService;
 
+/**
+ * Rest controller for cities management
+ * 
+ * @author egiraldo
+ *
+ */
 @RestController
 @RequestMapping("/fixedassets/cities/v1.0")
 public class CityController {
@@ -25,6 +31,17 @@ public class CityController {
 	@Autowired
 	private CityService cityService;
 
+	/**
+	 * This method will manage creation of new cities into the system
+	 * 
+	 * @param city,
+	 *            city DTO to create a new city
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return {@link CityDTO}, city created
+	 * @throws FixedAssetsServiceException
+	 *             if fails creation of new city
+	 */
 	@PostMapping
 	public ResponseEntity<CityDTO> post(@RequestBody CityDTO city,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
@@ -34,6 +51,15 @@ public class CityController {
 		return new ResponseEntity<CityDTO>(newCity, HttpStatus.CREATED);
 	}
 
+	/**
+	 * This method will retrieve all cities
+	 * 
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return {@link CityDTO}, all cities
+	 * @throws FixedAssetsServiceException
+	 *             if fails searching cities
+	 */
 	@GetMapping
 	public ResponseEntity<List<CityDTO>> get(@RequestHeader(value = "locale", required = false) String locale)
 			throws FixedAssetsServiceException {
@@ -44,6 +70,17 @@ public class CityController {
 
 	}
 
+	/**
+	 * This method will retrieve city by entered ID
+	 * 
+	 * @param id,
+	 *            city ID to find city
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return {@link CityDTO}, city found
+	 * @throws FixedAssetsServiceException
+	 *             if fails city search
+	 */
 	@GetMapping("/byId/{id}")
 	public ResponseEntity<CityDTO> getById(@PathVariable(value = "id") String id,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
@@ -54,6 +91,17 @@ public class CityController {
 
 	}
 
+	/**
+	 * This method will retrieve city by entered name
+	 * 
+	 * @param name,
+	 *            city name to find city
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return {@link CityDTO}, city found
+	 * @throws FixedAssetsServiceException
+	 *             if fails city search
+	 */
 	@GetMapping("/byName/{name}")
 	public ResponseEntity<CityDTO> getByName(@PathVariable(value = "name") String name,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
@@ -64,6 +112,17 @@ public class CityController {
 
 	}
 
+	/**
+	 * This method will find city by entered code
+	 * 
+	 * @param code
+	 *            city code to find city
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return {@link CityDTO}, cities found
+	 * @throws FixedAssetsServiceException
+	 *             if fails city search
+	 */
 	@GetMapping("/byCode/{code}")
 	public ResponseEntity<List<CityDTO>> getByCode(@PathVariable(value = "code") String code,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
@@ -74,6 +133,17 @@ public class CityController {
 
 	}
 
+	/**
+	 * This method will update an city already created
+	 * 
+	 * @param city,
+	 *            city to update
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return {@link CityDTO}, city updated
+	 * @throws FixedAssetsServiceException
+	 *             if fails city update
+	 */
 	@PutMapping
 	public ResponseEntity<CityDTO> put(@RequestBody CityDTO city,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {

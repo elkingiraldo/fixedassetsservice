@@ -33,9 +33,11 @@ public class CityService {
 	/**
 	 * This method will create a new city
 	 * 
-	 * @param city
-	 * @return
+	 * @param city,
+	 *            city DTO to create
+	 * @return {@link CityDTO}, city DTO created
 	 * @throws FixedAssetsServiceException
+	 *             if fail creation
 	 */
 	public CityDTO create(CityDTO city) throws FixedAssetsServiceException {
 
@@ -51,7 +53,7 @@ public class CityService {
 	/**
 	 * Retrieve all cities
 	 * 
-	 * @return
+	 * @return {@link CityDTO}, retrieved cities
 	 */
 	public List<CityDTO> retrieveAllCities() {
 
@@ -63,9 +65,11 @@ public class CityService {
 	/**
 	 * Retrieve a city by ID
 	 * 
-	 * @param id
-	 * @return
+	 * @param id,
+	 *            city ID to find
+	 * @return {@link CityDTO}, city DTO found
 	 * @throws FixedAssetsServiceException
+	 *             if city not found
 	 */
 	public CityDTO retrieveById(String id) throws FixedAssetsServiceException {
 
@@ -81,9 +85,11 @@ public class CityService {
 	/**
 	 * This method will retrieve city by name
 	 * 
-	 * @param name
-	 * @return
+	 * @param name,
+	 *            city name to find
+	 * @return {@link CityDTO}, retrieved city
 	 * @throws FixedAssetsServiceException
+	 *             if city not found
 	 */
 	public CityDTO retrieveByName(String name) throws FixedAssetsServiceException {
 
@@ -99,9 +105,11 @@ public class CityService {
 	/**
 	 * This method will retrieve city by code
 	 * 
-	 * @param code
-	 * @return
+	 * @param code,
+	 *            city code to find
+	 * @return {@link CityDTO}, retrieved city
 	 * @throws FixedAssetsServiceException
+	 *             if city not found
 	 */
 	public List<CityDTO> retrieveByCode(String code) throws FixedAssetsServiceException {
 
@@ -117,9 +125,11 @@ public class CityService {
 	/**
 	 * This method will update a city
 	 * 
-	 * @param city
-	 * @return
+	 * @param city,
+	 *            city DTO to update
+	 * @return {@link CityDTO}, city updated
 	 * @throws FixedAssetsServiceException
+	 *             if fails update of the entered city
 	 */
 	public CityDTO update(CityDTO city) throws FixedAssetsServiceException {
 
@@ -134,9 +144,12 @@ public class CityService {
 	/**
 	 * This method can update city availability status too
 	 * 
-	 * @param id
-	 * @param isAvailableToAssignArea
+	 * @param id,
+	 *            city ID to update as root
+	 * @param isAvailableToAssignArea,
+	 *            flag to know if city is available to assign
 	 * @throws FixedAssetsServiceException
+	 *             if can't update city
 	 */
 	public void updateAsRoot(String id, boolean isAvailableToAssignArea) throws FixedAssetsServiceException {
 

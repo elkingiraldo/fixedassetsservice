@@ -24,8 +24,9 @@ public class FixedAssetsConverterService {
 	/**
 	 * Convert entity to DTO
 	 * 
-	 * @param entity
-	 * @return
+	 * @param entity,
+	 *            fixed asset entity to transform
+	 * @return {@link FixedAssetDTO}, fixed asset transformed to DTO
 	 */
 	public FixedAssetDTO toDTO(FixedAsset entity) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -36,8 +37,9 @@ public class FixedAssetsConverterService {
 	/**
 	 * Convert DTO to entity
 	 * 
-	 * @param dto
-	 * @return
+	 * @param dto,
+	 *            fixed asset DTO to transform
+	 * @return {@link FixedAsset}, fixed asset transformed to entity
 	 */
 	public FixedAsset toEntity(FixedAssetDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -48,8 +50,9 @@ public class FixedAssetsConverterService {
 	/**
 	 * Paging multiples entities
 	 * 
-	 * @param entities
-	 * @return
+	 * @param entities,
+	 *            fixed assets entities to transform
+	 * @return {@link FixedAssetDTO}, fixed assets transformed
 	 */
 	public PageResponseDTO<FixedAssetDTO> toDtos(Page<FixedAsset> entities) {
 

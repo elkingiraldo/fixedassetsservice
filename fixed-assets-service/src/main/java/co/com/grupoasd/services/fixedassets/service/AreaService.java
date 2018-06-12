@@ -40,6 +40,7 @@ public class AreaService {
 	 *            area entity
 	 * @return {@link AreaDTO}
 	 * @throws FixedAssetsServiceException
+	 *             if creation asset fail
 	 */
 	public AreaDTO create(AreaDTO area) throws FixedAssetsServiceException {
 
@@ -55,7 +56,7 @@ public class AreaService {
 	/**
 	 * Retrieve all areas into the company
 	 * 
-	 * @return {@link List<AreaDTO>}, list of dto transformed
+	 * @return {@link AreaDTO}, list of dto transformed
 	 */
 	public List<AreaDTO> retrieveAllAreas() {
 		List<Area> areaList = repository.findAll();
@@ -69,6 +70,7 @@ public class AreaService {
 	 *            ID of area to find
 	 * @return {@link AreaDTO}, area found and transformed
 	 * @throws FixedAssetsServiceException
+	 *             if area not found
 	 */
 	public AreaDTO retrieveById(String id) throws FixedAssetsServiceException {
 
@@ -87,8 +89,8 @@ public class AreaService {
 	 * @param name,
 	 *            name of area
 	 * @return {@link AreaDTO}
-	 * @throws FixedAssetsServiceException,
-	 *             exception management
+	 * @throws FixedAssetsServiceException
+	 *             if area name not found
 	 */
 	public AreaDTO retrieveByName(String name) throws FixedAssetsServiceException {
 
@@ -106,9 +108,9 @@ public class AreaService {
 	 * 
 	 * @param cityOfAssignmentId,
 	 *            ID of the city that was assigned
-	 * @return {@linkAreaDTO}, AreaDTO found
-	 * @throws FixedAssetsServiceException,
-	 *             exception management
+	 * @return {@link AreaDTO}, AreaDTO found
+	 * @throws FixedAssetsServiceException
+	 *             if area to update not found
 	 */
 	public AreaDTO retrieveByCityOfAssignmentId(String cityOfAssignmentId) throws FixedAssetsServiceException {
 
@@ -126,8 +128,8 @@ public class AreaService {
 	 * 
 	 * @param id,
 	 *            ID of area to delete
-	 * @throws FixedAssetsServiceException,
-	 *             exception management
+	 * @throws FixedAssetsServiceException
+	 *             if area to delete not found
 	 */
 	public void delete(String id) throws FixedAssetsServiceException {
 
@@ -149,8 +151,8 @@ public class AreaService {
 	 * @param area,
 	 *            area DTO to update
 	 * @return {@link AreaDTO}
-	 * @throws FixedAssetsServiceException,
-	 *             exception management
+	 * @throws FixedAssetsServiceException
+	 *             if fail update a fixed asset
 	 */
 	public AreaDTO update(AreaDTO area) throws FixedAssetsServiceException {
 

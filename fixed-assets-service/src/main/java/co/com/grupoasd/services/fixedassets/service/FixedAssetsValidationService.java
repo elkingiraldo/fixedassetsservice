@@ -40,8 +40,10 @@ public class FixedAssetsValidationService {
 	/**
 	 * It will validate step by step creation request
 	 * 
-	 * @param dto
+	 * @param dto,
+	 *            fixed asset DTO to validate creation
 	 * @throws FixedAssetsServiceException
+	 *             if validate creation fails
 	 */
 	public void validateCreation(FixedAssetDTO dto) throws FixedAssetsServiceException {
 
@@ -422,9 +424,12 @@ public class FixedAssetsValidationService {
 	/**
 	 * This method will validate the request to update it
 	 * 
-	 * @param dto
-	 * @return
+	 * @param dto,
+	 *            fixed asset DTO to validate update @return, {@link FixedAsset},
+	 *            entity validated and found
+	 * @return {@link FixedAsset}, fixed asset validated and found in DB
 	 * @throws FixedAssetsServiceException
+	 *             if fail validation update process
 	 */
 	public FixedAsset validateUpdate(FixedAssetDTO dto) throws FixedAssetsServiceException {
 

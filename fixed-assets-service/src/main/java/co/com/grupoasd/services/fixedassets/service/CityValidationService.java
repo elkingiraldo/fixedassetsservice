@@ -20,8 +20,10 @@ public class CityValidationService {
 	/**
 	 * This method will validate correct creation if cities
 	 * 
-	 * @param city
+	 * @param city,
+	 *            city DTO to validate creation
 	 * @throws FixedAssetsServiceException
+	 *             if fail city creation
 	 */
 	public void validateCreation(CityDTO city) throws FixedAssetsServiceException {
 
@@ -79,8 +81,10 @@ public class CityValidationService {
 	/**
 	 * This method will validate the update for a city
 	 * 
-	 * @param city
+	 * @param city,
+	 *            city DTO to update
 	 * @throws FixedAssetsServiceException
+	 *             if fail update of city
 	 */
 	public void validateUpdate(CityDTO city) throws FixedAssetsServiceException {
 

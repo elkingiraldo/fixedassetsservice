@@ -1,9 +1,15 @@
 package co.com.grupoasd.services.fixedassets.paging;
 
+/**
+ * Sort information for responses
+ * 
+ * @author egiraldo
+ *
+ */
 public class Sort {
 
 	private boolean sorted;
-	
+
 	private boolean unsorted;
 
 	public boolean isSorted() {
@@ -21,6 +27,5 @@ public class Sort {
 	public void setUnsorted(boolean unsorted) {
 		this.unsorted = unsorted;
 	}
-
 
 }

@@ -29,7 +29,10 @@ public class UserValidationService {
 	/**
 	 * Validate creation for users
 	 * 
-	 * @param user
+	 * @param user,
+	 *            user DTO to validate creation
+	 * @throws FixedAssetsServiceException
+	 *             if validate creation fails
 	 */
 	public void validateCreation(UserDTO user) throws FixedAssetsServiceException {
 
@@ -107,8 +110,10 @@ public class UserValidationService {
 	/**
 	 * It will validate update an user
 	 * 
-	 * @param user
+	 * @param user,
+	 *            user DTO to validate update
 	 * @throws FixedAssetsServiceException
+	 *             if validate update fails
 	 */
 	public void validateUpdate(UserDTO user) throws FixedAssetsServiceException {
 

@@ -1,5 +1,11 @@
 package co.com.grupoasd.services.fixedassets.paging;
 
+/**
+ * Page information for responses
+ * 
+ * @author egiraldo
+ *
+ */
 public class PageInformation {
 
 	private Sort sort;

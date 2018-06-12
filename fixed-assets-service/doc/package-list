@@ -1,0 +1,12 @@
+co.com.grupoasd.services.fixedassets
+co.com.grupoasd.services.fixedassets.configuration
+co.com.grupoasd.services.fixedassets.constants
+co.com.grupoasd.services.fixedassets.contoller
+co.com.grupoasd.services.fixedassets.criteria
+co.com.grupoasd.services.fixedassets.dao
+co.com.grupoasd.services.fixedassets.dtos
+co.com.grupoasd.services.fixedassets.exception
+co.com.grupoasd.services.fixedassets.integrations
+co.com.grupoasd.services.fixedassets.paging
+co.com.grupoasd.services.fixedassets.service
+co.com.grupoasd.services.fixedassets.types

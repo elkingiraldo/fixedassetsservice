@@ -32,9 +32,11 @@ public class UserService {
 	/**
 	 * This method will create new users
 	 * 
-	 * @param user
-	 * @return
+	 * @param user,
+	 *            user DTO to create
+	 * @return {@link UserDTO}, user created
 	 * @throws FixedAssetsServiceException
+	 *             if fails creation of a new user
 	 */
 	public UserDTO create(UserDTO user) throws FixedAssetsServiceException {
 
@@ -48,7 +50,7 @@ public class UserService {
 	/**
 	 * This method will retrieve all users
 	 * 
-	 * @return
+	 * @return {@link UserDTO}, all users in DB
 	 */
 	public List<UserDTO> retrieveAllUsers() {
 		List<User> entities = repository.findAll();
@@ -58,9 +60,11 @@ public class UserService {
 	/**
 	 * This method will retrieve User by personal ID
 	 * 
-	 * @param personalId
-	 * @return
+	 * @param personalId,
+	 *            user personal ID to find User
+	 * @return {@link UserDTO}, user found
 	 * @throws FixedAssetsServiceException
+	 *             if user not found
 	 */
 	public UserDTO retrieveByPersonalId(String personalId) throws FixedAssetsServiceException {
 
@@ -76,9 +80,11 @@ public class UserService {
 	/**
 	 * This method will update information for User
 	 * 
-	 * @param user
-	 * @return
+	 * @param user,
+	 *            user DTO to update
+	 * @return {@link UserDTO}, user updated
 	 * @throws FixedAssetsServiceException
+	 *             if fails update of entered user
 	 */
 	public UserDTO update(UserDTO user) throws FixedAssetsServiceException {
 
@@ -92,8 +98,10 @@ public class UserService {
 	/**
 	 * This method will delete an user
 	 * 
-	 * @param id
+	 * @param id,
+	 *            user ID to delete
 	 * @throws FixedAssetsServiceException
+	 *             if user not found
 	 */
 	public void delete(String id) throws FixedAssetsServiceException {
 

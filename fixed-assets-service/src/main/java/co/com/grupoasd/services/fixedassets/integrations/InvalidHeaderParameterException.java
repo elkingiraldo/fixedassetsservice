@@ -1,5 +1,11 @@
 package co.com.grupoasd.services.fixedassets.integrations;
 
+/**
+ * Manage invalid headers found into the request
+ * 
+ * @author egiraldo
+ *
+ */
 public class InvalidHeaderParameterException extends Exception {
 
 	private static final long serialVersionUID = 3571679413868821807L;

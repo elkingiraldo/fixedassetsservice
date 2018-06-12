@@ -39,9 +39,11 @@ public class FixedAssetsService {
 	/**
 	 * Service for creating a new fixed asset
 	 * 
-	 * @param fixedAsset
-	 * @return
+	 * @param fixedAsset,
+	 *            fixed asset DTO to create
+	 * @return {@link FixedAssetDTO}, fixed asset created
 	 * @throws FixedAssetsServiceException
+	 *             if fails creation of new fixed asset
 	 */
 	public FixedAssetDTO create(FixedAssetDTO fixedAsset) throws FixedAssetsServiceException {
 
@@ -59,11 +61,15 @@ public class FixedAssetsService {
 	/**
 	 * Get fixed assets depending on user filters
 	 * 
-	 * @param searchFilters
-	 * @param orderFields
-	 * @param pagingInformation
-	 * @return
+	 * @param searchFilters,
+	 *            filers for searching fixed assets
+	 * @param orderFields,
+	 *            filters for order results
+	 * @param pagingInformation,
+	 *            information about page
+	 * @return {@link FixedAssetDTO}, fixed asset found
 	 * @throws FixedAssetsServiceException
+	 *             if fails getting fixed assets
 	 */
 	public PageResponseDTO<FixedAssetDTO> get(Map<String, String> searchFilters, Map<String, SortDirection> orderFields,
 			PagingInformation pagingInformation) throws FixedAssetsServiceException {
@@ -81,9 +87,11 @@ public class FixedAssetsService {
 	/**
 	 * This method will update fixed asset and save it in DB
 	 * 
-	 * @param dto
-	 * @return
+	 * @param dto,
+	 *            fixed asset DTO to update
+	 * @return {@link FixedAssetDTO}, fixed asset updated
 	 * @throws FixedAssetsServiceException
+	 *             if fails update of entered fixed asset
 	 */
 	public FixedAssetDTO update(FixedAssetDTO dto) throws FixedAssetsServiceException {
 
@@ -101,7 +109,8 @@ public class FixedAssetsService {
 	/**
 	 * Update fixed asset automatically when leaving date is in the past
 	 * 
-	 * @param dto
+	 * @param dto,
+	 *            fixed asset to expiration Date is arriving
 	 */
 	public void updateExpirateLeavingDate(FixedAssetDTO dto) {
 

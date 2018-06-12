@@ -21,8 +21,9 @@ public class UserConverterService {
 	/**
 	 * Convert entity to DTO
 	 * 
-	 * @param entity
-	 * @return
+	 * @param entity,
+	 *            user entity to transform
+	 * @return {@link UserDTO}, user transformed in DTO
 	 */
 	public UserDTO toDTO(User entity) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -33,8 +34,9 @@ public class UserConverterService {
 	/**
 	 * Convert DTO to entity
 	 * 
-	 * @param dto
-	 * @return
+	 * @param dto,
+	 *            user DTO to transform
+	 * @return {@link User}, user entity transformed
 	 */
 	public User toEntity(UserDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -45,8 +47,9 @@ public class UserConverterService {
 	/**
 	 * Paging multiples entities
 	 * 
-	 * @param entities
-	 * @return
+	 * @param entities,
+	 *            user entities to transform
+	 * @return {@link UserDTO}, user DTOs transformed
 	 */
 
 	public List<UserDTO> toDtos(List<User> entities) {

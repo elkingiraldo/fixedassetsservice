@@ -30,8 +30,10 @@ public class AreaValidationService {
 	/**
 	 * Validate creation requests
 	 * 
-	 * @param area
+	 * @param area,
+	 *            area DTO to create
 	 * @throws FixedAssetsServiceException
+	 *             if fail validation for DTO in creation
 	 */
 	public void validateCreation(AreaDTO area) throws FixedAssetsServiceException {
 
@@ -96,8 +98,10 @@ public class AreaValidationService {
 	/**
 	 * This method will validate update of an area
 	 * 
-	 * @param area
+	 * @param area,
+	 *            area DTO to update
 	 * @throws FixedAssetsServiceException
+	 *             if fail validation of DTO in the update
 	 */
 	public void validateUpdate(AreaDTO area) throws FixedAssetsServiceException {
 

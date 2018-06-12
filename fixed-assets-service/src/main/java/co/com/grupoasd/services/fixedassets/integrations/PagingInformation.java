@@ -1,5 +1,11 @@
 package co.com.grupoasd.services.fixedassets.integrations;
 
+/**
+ * Information of paging
+ * 
+ * @author egiraldo
+ *
+ */
 public class PagingInformation {
 
 	private int start;

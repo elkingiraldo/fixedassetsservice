@@ -36,6 +36,17 @@ public class FixedAssetsController {
 	@Autowired
 	private FixedAssetsService fixedAssetsService;
 
+	/**
+	 * This method will create a new fixed asset
+	 * 
+	 * @param fixedAsset,
+	 *            fixed asset to create
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return {@link FixedAssetDTO}, fixed asset created
+	 * @throws FixedAssetsServiceException
+	 *             if fails fixed asset search
+	 */
 	@PostMapping
 	public ResponseEntity<FixedAssetDTO> post(@RequestBody FixedAssetDTO fixedAsset,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
@@ -49,6 +60,23 @@ public class FixedAssetsController {
 		return new ResponseEntity<FixedAssetDTO>(newFixedAsset, HttpStatus.CREATED);
 	}
 
+	/**
+	 * This method will retrieve fixed assets by entered filters
+	 * 
+	 * @param searchFilters,
+	 *            filters to search fixed assets
+	 * @param orderFields,
+	 *            filters to order response
+	 * @param pagingInformation,
+	 *            filter to paging response information
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return {@link FixedAssetDTO}, fixed asset found
+	 * @throws FixedAssetsServiceException
+	 *             if fixed assets search fails
+	 * @throws InvalidHeaderParameterException
+	 *             if invalid header
+	 */
 	@GetMapping
 	public ResponseEntity<PageResponseDTO<FixedAssetDTO>> get(
 			@RequestParam(value = "searchFilters", required = false) String searchFilters,
@@ -71,6 +99,17 @@ public class FixedAssetsController {
 
 	}
 
+	/**
+	 * This method will update an old fixed asset
+	 * 
+	 * @param fixedAsset,fixed
+	 *            asset to update
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return {@link FixedAssetDTO}, fixed asset updated
+	 * @throws FixedAssetsServiceException
+	 *             id fixed asset update fails
+	 */
 	@PutMapping
 	public ResponseEntity<FixedAssetDTO> put(@RequestBody FixedAssetDTO fixedAsset,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {

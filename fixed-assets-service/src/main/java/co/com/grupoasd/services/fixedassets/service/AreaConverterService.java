@@ -49,7 +49,7 @@ public class AreaConverterService {
 	 * 
 	 * @param entities,
 	 *            entities to transform
-	 * @return {@link List<AreaDTO>}
+	 * @return {@link AreaDTO}
 	 */
 
 	public List<AreaDTO> toDtos(List<Area> entities) {

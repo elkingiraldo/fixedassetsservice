@@ -27,9 +27,9 @@ public class GetRequestSerializer {
 	 *            filters
 	 * @param pagingInformation,
 	 *            paging information
-	 * @return
-	 * @throws InvalidHeaderParameterException,
-	 *             exception finding headers
+	 * @return Map, Map of Strings related to found criteria
+	 * @throws InvalidHeaderParameterException
+	 *             if there are an invalid header
 	 */
 	public Map<String, String> compressHeaders(Map<String, String> filters, Map<String, SortDirection> orderFields,
 			PagingInformation pagingInformation) throws InvalidHeaderParameterException {

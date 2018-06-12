@@ -21,8 +21,9 @@ public class CityConverterService {
 	/**
 	 * Convert entity to DTO
 	 * 
-	 * @param entity
-	 * @return
+	 * @param entity,
+	 *            city entity to transform
+	 * @return {@link CityDTO}, transformed city
 	 */
 	public CityDTO toDTO(City entity) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -33,8 +34,9 @@ public class CityConverterService {
 	/**
 	 * Convert DTO to entity
 	 * 
-	 * @param dto
-	 * @return
+	 * @param dto,
+	 *            city DTO to transform
+	 * @return {@link City}, transformed city
 	 */
 	public City toEntity(CityDTO dto) {
 		ModelMapper modelMapper = new ModelMapper();
@@ -45,8 +47,9 @@ public class CityConverterService {
 	/**
 	 * Paging multiples entities
 	 * 
-	 * @param entities
-	 * @return
+	 * @param entities,
+	 *            cities to transform
+	 * @return {@link CityDTO}, cities transformed
 	 */
 
 	public List<CityDTO> toDtos(List<City> entities) {

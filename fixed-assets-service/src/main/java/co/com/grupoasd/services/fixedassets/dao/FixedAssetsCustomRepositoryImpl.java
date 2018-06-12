@@ -27,8 +27,14 @@ import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceExceptio
 import co.com.grupoasd.services.fixedassets.integrations.PagingInformation;
 import co.com.grupoasd.services.fixedassets.integrations.SortDirection;
 
+/**
+ * Implementation for fixed asset repository
+ * 
+ * @author egiraldo
+ *
+ */
 public class FixedAssetsCustomRepositoryImpl implements FixedAssetsCustomRepository {
-	
+
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	SimpleDateFormat format = new SimpleDateFormat(FixedAssetsServiceConstants.DATE_QUERY_FORMAT);
@@ -42,9 +48,9 @@ public class FixedAssetsCustomRepositoryImpl implements FixedAssetsCustomReposit
 	@Override
 	public Page<FixedAsset> search(Map<String, String> searchFilters, Map<String, SortDirection> orderFields,
 			PagingInformation pagingInformation) throws FixedAssetsServiceException {
-		
+
 		logger.info("[FixedAssetsCustomRepositoryImpl][search]. Starting searching in DB");
-		
+
 		Query query = new Query();
 
 		filterSearch(searchFilters, query);
@@ -55,12 +61,22 @@ public class FixedAssetsCustomRepositoryImpl implements FixedAssetsCustomReposit
 
 		query.with(pageable);
 		List<FixedAsset> campaigns = mongoTemplate.find(query, FixedAsset.class);
-		
+
 		logger.info("[FixedAssetsCustomRepositoryImpl][search]. End search in DB.");
 
 		return PageableExecutionUtils.getPage(campaigns, pageable, () -> mongoTemplate.count(query, FixedAsset.class));
 	}
 
+	/**
+	 * This method will find the filters for search in MongoDB template
+	 * 
+	 * @param searchFilters,
+	 *            entered filters
+	 * @param query,
+	 *            generated query
+	 * @throws FixedAssetsServiceException
+	 *             if fails searching filters
+	 */
 	private void filterSearch(Map<String, String> searchFilters, Query query) throws FixedAssetsServiceException {
 
 		if (searchFilters != null) {
@@ -131,6 +147,17 @@ public class FixedAssetsCustomRepositoryImpl implements FixedAssetsCustomReposit
 
 	}
 
+	/**
+	 * This method will sort results by entered filters
+	 * 
+	 * @param orderFields,
+	 *            filters for sort
+	 * @param pagingInformation,
+	 *            filters for paging
+	 * @return {@link PageRequest}
+	 * @throws FixedAssetsServiceException
+	 *             if sort filters fails
+	 */
 	private PageRequest orderResults(Map<String, SortDirection> orderFields, PagingInformation pagingInformation)
 			throws FixedAssetsServiceException {
 		if (orderFields != null) {
@@ -202,6 +229,15 @@ public class FixedAssetsCustomRepositoryImpl implements FixedAssetsCustomReposit
 		}
 	}
 
+	/**
+	 * This method will get criteria from user request
+	 * 
+	 * @param criteriaString,
+	 *            entered criteria
+	 * @return {@link FixedAssetCriteria}, criteria found
+	 * @throws FixedAssetsServiceException
+	 *             if fails finding criteria
+	 */
 	private FixedAssetCriteria getCriteria(String criteriaString) throws FixedAssetsServiceException {
 		try {
 			FixedAssetCriteria criteria = FixedAssetCriteria.valueOf(criteriaString);
@@ -217,6 +253,13 @@ public class FixedAssetsCustomRepositoryImpl implements FixedAssetsCustomReposit
 
 	}
 
+	/**
+	 * This method will paging
+	 * 
+	 * @param pagingInformation,
+	 *            paging entered information
+	 * @return {@link PagingInformation}, paging information for searching
+	 */
 	private PagingInformation fixPagination(PagingInformation pagingInformation) {
 
 		if (pagingInformation == null) {

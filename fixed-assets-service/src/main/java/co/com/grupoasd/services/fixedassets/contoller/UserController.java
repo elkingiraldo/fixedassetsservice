@@ -19,6 +19,12 @@ import co.com.grupoasd.services.fixedassets.dtos.UserDTO;
 import co.com.grupoasd.services.fixedassets.exception.FixedAssetsServiceException;
 import co.com.grupoasd.services.fixedassets.service.UserService;
 
+/**
+ * Rest controller for users management
+ * 
+ * @author egiraldo
+ *
+ */
 @RestController
 @RequestMapping("/fixedassets/users/v1.0")
 public class UserController {
@@ -26,6 +32,17 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * This method will create a new user into the system
+	 * 
+	 * @param user,
+	 *            user DTO to create a new user
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return {@link UserDTO}, user created
+	 * @throws FixedAssetsServiceException
+	 *             if fails user creation
+	 */
 	@PostMapping
 	public ResponseEntity<UserDTO> post(@RequestBody UserDTO user,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
@@ -35,6 +52,15 @@ public class UserController {
 		return new ResponseEntity<UserDTO>(newUser, HttpStatus.CREATED);
 	}
 
+	/**
+	 * This method will retrieve all users in DB
+	 * 
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return {@link UserDTO}, all users
+	 * @throws FixedAssetsServiceException
+	 *             if fails user search
+	 */
 	@GetMapping
 	public ResponseEntity<List<UserDTO>> get(@RequestHeader(value = "locale", required = false) String locale)
 			throws FixedAssetsServiceException {
@@ -45,6 +71,17 @@ public class UserController {
 
 	}
 
+	/**
+	 * This method will find user by personal ID
+	 * 
+	 * @param personalId,
+	 *            unique ID of user to find user
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return {@link UserDTO}, user found
+	 * @throws FixedAssetsServiceException
+	 *             if fails user search
+	 */
 	@GetMapping("/{personalId}")
 	public ResponseEntity<UserDTO> getByName(@PathVariable(value = "personalId") String personalId,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
@@ -55,6 +92,17 @@ public class UserController {
 
 	}
 
+	/**
+	 * This method will update an user
+	 * 
+	 * @param user,
+	 *            user DTO to update
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return {@link UserDTO}, user updated
+	 * @throws FixedAssetsServiceException
+	 *             if fails user update
+	 */
 	@PutMapping
 	public ResponseEntity<UserDTO> put(@RequestBody UserDTO user,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
@@ -63,6 +111,17 @@ public class UserController {
 		return new ResponseEntity<UserDTO>(newUser, HttpStatus.OK);
 	}
 
+	/**
+	 * This method will delete an existing user
+	 * 
+	 * @param id,
+	 *            user ID to delete old user
+	 * @param locale,
+	 *            language the user wants to use
+	 * @return Void, OK response
+	 * @throws FixedAssetsServiceException
+	 *             if user delete fails
+	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable(value = "id") String id,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {

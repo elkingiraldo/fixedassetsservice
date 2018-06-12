@@ -8,6 +8,12 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+/**
+ * Configuration for internationalization
+ * 
+ * @author egiraldo
+ *
+ */
 @Configuration
 public class I18nConfiguration {
 
