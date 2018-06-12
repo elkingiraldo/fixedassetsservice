@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,8 @@ import co.com.grupoasd.services.fixedassets.integrations.PagingInformation;
 import co.com.grupoasd.services.fixedassets.integrations.SortDirection;
 
 public class FixedAssetsCustomRepositoryImpl implements FixedAssetsCustomRepository {
+	
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	SimpleDateFormat format = new SimpleDateFormat(FixedAssetsServiceConstants.DATE_QUERY_FORMAT);
 
@@ -38,6 +42,9 @@ public class FixedAssetsCustomRepositoryImpl implements FixedAssetsCustomReposit
 	@Override
 	public Page<FixedAsset> search(Map<String, String> searchFilters, Map<String, SortDirection> orderFields,
 			PagingInformation pagingInformation) throws FixedAssetsServiceException {
+		
+		logger.info("[FixedAssetsCustomRepositoryImpl][search]. Starting searching in DB");
+		
 		Query query = new Query();
 
 		filterSearch(searchFilters, query);
@@ -48,6 +55,8 @@ public class FixedAssetsCustomRepositoryImpl implements FixedAssetsCustomReposit
 
 		query.with(pageable);
 		List<FixedAsset> campaigns = mongoTemplate.find(query, FixedAsset.class);
+		
+		logger.info("[FixedAssetsCustomRepositoryImpl][search]. End search in DB.");
 
 		return PageableExecutionUtils.getPage(campaigns, pageable, () -> mongoTemplate.count(query, FixedAsset.class));
 	}

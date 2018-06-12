@@ -40,11 +40,11 @@ public class FixedAssetsController {
 	public ResponseEntity<FixedAssetDTO> post(@RequestBody FixedAssetDTO fixedAsset,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
 
-		logger.debug("FixedAssetDTO request:" + fixedAsset.toString());
+		logger.info("[FixedAssetsController][post]. FixedAssetDTO request:" + fixedAsset.toString());
 
 		FixedAssetDTO newFixedAsset = fixedAssetsService.create(fixedAsset);
 
-		logger.debug("FixedAssetDTO saved response:" + newFixedAsset.toString());
+		logger.info("[FixedAssetsController][post]. FixedAssetDTO saved response:" + newFixedAsset.toString());
 
 		return new ResponseEntity<FixedAssetDTO>(newFixedAsset, HttpStatus.CREATED);
 	}
@@ -57,18 +57,15 @@ public class FixedAssetsController {
 			@RequestHeader(value = "locale", required = false) String locale)
 			throws FixedAssetsServiceException, InvalidHeaderParameterException {
 
-		logger.debug("Search Filters: " + searchFilters + ", Order Fields: " + orderFields + "Paging Information: "
-				+ pagingInformation);
-
-		logger.info("Search Filters: " + searchFilters + ", Order Fields: " + orderFields + "Paging Information: "
-				+ pagingInformation);
+		logger.info("[FixedAssetsController][get]. Search Filters: " + searchFilters + ", Order Fields: " + orderFields
+				+ "Paging Information: " + pagingInformation);
 
 		PageResponseDTO<FixedAssetDTO> fixedAssetsFound = fixedAssetsService.get(
 				GetRequestSerializer.extractFilters(searchFilters),
 				GetRequestSerializer.extractOrderFields(orderFields),
 				GetRequestSerializer.extractPagingInformation(pagingInformation));
 
-		logger.debug("Search Response: " + fixedAssetsFound.toString());
+		logger.info("[FixedAssetsController][get]. Search Response: " + fixedAssetsFound.toString());
 
 		return new ResponseEntity<PageResponseDTO<FixedAssetDTO>>(fixedAssetsFound, HttpStatus.OK);
 
@@ -78,7 +75,12 @@ public class FixedAssetsController {
 	public ResponseEntity<FixedAssetDTO> put(@RequestBody FixedAssetDTO fixedAsset,
 			@RequestHeader(value = "locale", required = false) String locale) throws FixedAssetsServiceException {
 
+		logger.info("[FixedAssetsController][put]. FixedAssetDTO request:" + fixedAsset.toString());
+
 		FixedAssetDTO newFixedAsset = fixedAssetsService.update(fixedAsset);
+
+		logger.info("[FixedAssetsController][put]. FixedAssetDTO saved response:" + newFixedAsset.toString());
+
 		return new ResponseEntity<FixedAssetDTO>(newFixedAsset, HttpStatus.OK);
 	}
 

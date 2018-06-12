@@ -3,6 +3,8 @@ package co.com.grupoasd.services.fixedassets.service;
 import java.util.Date;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,8 @@ import co.com.grupoasd.services.fixedassets.types.AssetType;
 @Service
 public class FixedAssetsValidationService {
 
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+
 	@Autowired
 	private FixedAssetsRepository fixedAssetsRepository;
 
@@ -41,6 +45,8 @@ public class FixedAssetsValidationService {
 	 */
 	public void validateCreation(FixedAssetDTO dto) throws FixedAssetsServiceException {
 
+		logger.info("[FixedAssetsValidationService][validateCreation]. Start validation");
+
 		validateDto(dto);
 		validateName(dto.getName());
 		validateSerial(dto.getSerial());
@@ -57,6 +63,8 @@ public class FixedAssetsValidationService {
 		validateAssetType(dto);
 		validateStockNumber(dto);
 
+		logger.info("[FixedAssetsValidationService][validateCreation]. End validation. Everything is OK");
+
 	}
 
 	/**
@@ -67,6 +75,8 @@ public class FixedAssetsValidationService {
 	 */
 	private void validateColor(FixedAssetDTO dto) throws FixedAssetsServiceException {
 		if (dto.getColor() == null || dto.getColor().isEmpty() || dto.getColor().trim().isEmpty()) {
+			logger.info("[FixedAssetsValidationService][validateColor]. Fixed Asset Color Required. Current value: "
+					+ dto.getColor());
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_COLOR_REQUIRED);
 		}
 
@@ -83,6 +93,9 @@ public class FixedAssetsValidationService {
 
 		if (dto.getAssignmentType() == null || dto.getAssignmentType().isEmpty()
 				|| dto.getAssignmentType().trim().isEmpty()) {
+			logger.info(
+					"[FixedAssetsValidationService][validateAssignment]. Fixed Asset Assignment type Required. Current value: "
+							+ dto.getAssignmentType());
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_TYPE_REQUIRED);
 		}
 
@@ -91,6 +104,9 @@ public class FixedAssetsValidationService {
 					.valueOf(dto.getAssignmentType().trim().toUpperCase());
 
 			if (assignmentType == null) {
+				logger.info(
+						"[FixedAssetsValidationService][validateAssignment]. Fixed Asset Assignment type invalid. Current value: "
+								+ assignmentType);
 				throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_TYPE_INVALID);
 			}
 
@@ -100,6 +116,9 @@ public class FixedAssetsValidationService {
 			case USER:
 				if (dto.getAssignmentId() == null || dto.getAssignmentId().isEmpty()
 						|| dto.getAssignmentId().trim().isEmpty()) {
+					logger.info(
+							"[FixedAssetsValidationService][validateAssignment]. Fixed Asset Assignment ID required. Current value: "
+									+ dto.getAssignmentId());
 					throw new FixedAssetsServiceException(
 							FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_ID_REQUIRED);
 				}
@@ -109,6 +128,9 @@ public class FixedAssetsValidationService {
 			case AREA:
 				if (dto.getAssignmentId() == null || dto.getAssignmentId().isEmpty()
 						|| dto.getAssignmentId().trim().isEmpty()) {
+					logger.info(
+							"[FixedAssetsValidationService][validateAssignment]. Fixed Asset Assignment ID required. Current value: "
+									+ dto.getAssignmentId());
 					throw new FixedAssetsServiceException(
 							FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_ID_REQUIRED);
 				}
@@ -122,6 +144,7 @@ public class FixedAssetsValidationService {
 			}
 
 		} catch (IllegalArgumentException e) {
+			logger.info("[FixedAssetsValidationService][validateAssignment]. Fixed Asset Assignment type invalid");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_ASSIGNMENT_TYPE_INVALID);
 		}
 
@@ -139,11 +162,17 @@ public class FixedAssetsValidationService {
 
 		if (stockNumber == null || stockNumber.isEmpty() || stockNumber.trim().isEmpty()) {
 			dto.setStockNumber(UUID.randomUUID().toString());
+			logger.info(
+					"[FixedAssetsValidationService][validateStockNumber]. Fixed Asset random stock number assigned. Current value: "
+							+ dto.getStockNumber());
 		}
 
 		FixedAsset oldFixedAsset = retrieveByStockNumber(stockNumber);
 
 		if (oldFixedAsset != null) {
+			logger.info(
+					"[FixedAssetsValidationService][validateStockNumber]. Fixed Asset Stock Number already exists. Old Fixed Asset: "
+							+ oldFixedAsset.toString());
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_STOCK_NUMBER_ALREADY_EXISTS);
 		}
 
@@ -159,6 +188,9 @@ public class FixedAssetsValidationService {
 	private FixedAsset retrieveByStockNumber(String stockNumber) throws FixedAssetsServiceException {
 
 		if (stockNumber == null || stockNumber.isEmpty() || stockNumber.trim().isEmpty()) {
+			logger.info(
+					"[FixedAssetsValidationService][retrieveByStockNumber]. Fixed Asset Stock Number required. Current value: "
+							+ stockNumber);
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_STOCK_NUMBER_REQUIRED);
 		}
 
@@ -195,6 +227,9 @@ public class FixedAssetsValidationService {
 				break;
 
 			default:
+				logger.info(
+						"[FixedAssetsValidationService][validateAssetType]. Fixed Asset type not recognized. Current value: "
+								+ typeString.trim().toUpperCase());
 				dto.setType(AssetType.OTHERS.name());
 				break;
 			}
@@ -213,6 +248,7 @@ public class FixedAssetsValidationService {
 		validateLeavingDate(dto.getLeavingDate());
 
 		if (dto.getPurchaseDate().after(dto.getLeavingDate())) {
+			logger.info("[FixedAssetsValidationService][validateDates]. Fixed Asset purchase date after leaving date");
 			throw new FixedAssetsServiceException(
 					FixedAssetsServiceErrorCodes.FIXED_ASSET_PURCHASE_DATE_NOT_LATER_LEAVING_DATE);
 		}
@@ -227,10 +263,13 @@ public class FixedAssetsValidationService {
 	 */
 	private void validateLeavingDate(Date leavingDate) throws FixedAssetsServiceException {
 		if (leavingDate == null) {
+			logger.info("[FixedAssetsValidationService][validateLeavingDate]. Fixed Asset leaving date required");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_LEAVING_DATE_REQUIRED);
 		}
 
 		if (leavingDate.before(new Date())) {
+			logger.info(
+					"[FixedAssetsValidationService][validateLeavingDate]. Fixed Asset leaving date can't be in the past");
 			throw new FixedAssetsServiceException(
 					FixedAssetsServiceErrorCodes.FIXED_ASSET_LEAVING_DATE_CANT_BE_IN_PAST_REQUIRED);
 		}
@@ -244,10 +283,13 @@ public class FixedAssetsValidationService {
 	 */
 	private void validatePurchaseDate(Date purchaseDate) throws FixedAssetsServiceException {
 		if (purchaseDate == null) {
+			logger.info("[FixedAssetsValidationService][validatePurchaseDate]. Fixed Asset purchase date required");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_PURCHASE_DATE_REQUIRED);
 		}
 
 		if (purchaseDate.after(new Date())) {
+			logger.info(
+					"[FixedAssetsValidationService][validatePurchaseDate]. Fixed Asset purchase date can't be in the future");
 			throw new FixedAssetsServiceException(
 					FixedAssetsServiceErrorCodes.FIXED_ASSET_PURCHASE_DATE_CANT_BE_IN_FUTURE_REQUIRED);
 		}
@@ -261,6 +303,7 @@ public class FixedAssetsValidationService {
 	 */
 	private void validatePurchaseValue(double purchacheValue) throws FixedAssetsServiceException {
 		if (purchacheValue == 0.0) {
+			logger.info("[FixedAssetsValidationService][validatePurchaseValue]. Fixed Asset purchase value required");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_PURCHASE_VALUE_REQUIRED);
 		}
 	}
@@ -272,6 +315,7 @@ public class FixedAssetsValidationService {
 	 */
 	private void validateLength(double length) throws FixedAssetsServiceException {
 		if (length == 0.0) {
+			logger.info("[FixedAssetsValidationService][validateLength]. Fixed Asset lenght required");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_LENGTH_REQUIRED);
 		}
 	}
@@ -283,6 +327,7 @@ public class FixedAssetsValidationService {
 	 */
 	private void validateWidth(double width) throws FixedAssetsServiceException {
 		if (width == 0.0) {
+			logger.info("[FixedAssetsValidationService][validateWidth]. Fixed Asset width required");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_WIDTH_REQUIRED);
 		}
 	}
@@ -294,6 +339,7 @@ public class FixedAssetsValidationService {
 	 */
 	private void validateHigh(double high) throws FixedAssetsServiceException {
 		if (high == 0.0) {
+			logger.info("[FixedAssetsValidationService][validateHigh]. Fixed Asset high required");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_HIGH_REQUIRED);
 		}
 	}
@@ -306,6 +352,7 @@ public class FixedAssetsValidationService {
 	 */
 	private void validateWeight(double weight) throws FixedAssetsServiceException {
 		if (weight == 0.0) {
+			logger.info("[FixedAssetsValidationService][validateWeight]. Fixed Asset weight required");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_WEIGHT_REQUIRED);
 		}
 	}
@@ -321,6 +368,9 @@ public class FixedAssetsValidationService {
 		FixedAsset entity = retrieveBySerial(serial);
 
 		if (entity != null) {
+			logger.info(
+					"[FixedAssetsValidationService][validateSerial]. Fixed Asset serial already exists. Old entity: "
+							+ entity.toString());
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_SERIAL_ALREADY_EXISTS);
 		}
 
@@ -336,6 +386,7 @@ public class FixedAssetsValidationService {
 	private FixedAsset retrieveBySerial(String serial) throws FixedAssetsServiceException {
 
 		if (serial == null || serial.isEmpty() || serial.trim().isEmpty()) {
+			logger.info("[FixedAssetsValidationService][retrieveBySerial]. Fixed Asset serial required");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_SERIAL_REQUIRED);
 		}
 
@@ -350,6 +401,7 @@ public class FixedAssetsValidationService {
 	 */
 	private void validateName(String name) throws FixedAssetsServiceException {
 		if (name == null || name.isEmpty() || name.trim().isEmpty()) {
+			logger.info("[FixedAssetsValidationService][validateName]. Fixed Asset name required");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_NAME_REQUIRED);
 		}
 	}
@@ -362,6 +414,7 @@ public class FixedAssetsValidationService {
 	 */
 	private void validateDto(FixedAssetDTO dto) throws FixedAssetsServiceException {
 		if (dto == null) {
+			logger.info("[FixedAssetsValidationService][validateDto]. Fixed Asset dto required");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_REQUIRED);
 		}
 	}
@@ -375,6 +428,8 @@ public class FixedAssetsValidationService {
 	 */
 	public FixedAsset validateUpdate(FixedAssetDTO dto) throws FixedAssetsServiceException {
 
+		logger.info("[FixedAssetsValidationService][validateUpdate]. Start validate update");
+
 		validateDto(dto);
 		FixedAsset oldFixedAsset = validateSerialForUpdating(dto.getSerial());
 
@@ -383,11 +438,15 @@ public class FixedAssetsValidationService {
 
 		if (oldFixedAsset.getLeavingDate().equals(dto.getLeavingDate())
 				&& oldFixedAsset.getStockNumber().equals(dto.getStockNumber())) {
+			logger.info("[FixedAssetsValidationService][validateUpdate]. No information for updating asset");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.NOT_INFORMATION_FOR_UPDATING);
 		}
 
 		oldFixedAsset.setLeavingDate(dto.getLeavingDate());
 		oldFixedAsset.setStockNumber(dto.getStockNumber());
+
+		logger.info("[FixedAssetsValidationService][validateUpdate]. End validate update OK. new entity: "
+				+ oldFixedAsset.toString());
 
 		return oldFixedAsset;
 	}
@@ -402,10 +461,13 @@ public class FixedAssetsValidationService {
 			throws FixedAssetsServiceException {
 
 		if (leavingDate == null) {
+			logger.info("[FixedAssetsValidationService][validateLeavingDateForUpdating]. Leaving date can't be null");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_LEAVING_DATE_REQUIRED);
 		}
 
 		if (leavingDate.before(oldFixedAsset.getPurchaseDate())) {
+			logger.info(
+					"[FixedAssetsValidationService][validateLeavingDateForUpdating]. Leaving date can't be before purchase date");
 			throw new FixedAssetsServiceException(
 					FixedAssetsServiceErrorCodes.FIXED_ASSET_LEAVING_DATE_NOT_BEFORE_PURCHASE_DATE);
 		}
@@ -425,6 +487,7 @@ public class FixedAssetsValidationService {
 		FixedAsset entity = retrieveBySerial(serial);
 
 		if (entity == null) {
+			logger.info("[FixedAssetsValidationService][validateSerialForUpdating]. Fixed asset serial not exists");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_SERIAL_NOT_EXISTS);
 		} else {
 			return entity;
@@ -446,6 +509,8 @@ public class FixedAssetsValidationService {
 		FixedAsset entity = retrieveByStockNumber(stockNumber);
 
 		if (entity != null && !oldFixedAsset.getStockNumber().equals(stockNumber)) {
+			logger.info(
+					"[FixedAssetsValidationService][validateStockNumberForUpdating]. Fixed asset tock number already exists");
 			throw new FixedAssetsServiceException(FixedAssetsServiceErrorCodes.FIXED_ASSET_STOCK_NUMBER_ALREADY_EXISTS);
 		}
 
